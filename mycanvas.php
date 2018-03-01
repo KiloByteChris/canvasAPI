@@ -28,6 +28,8 @@
 			?>
 		</header>
 		<main>
+			<div id="assignmentsDiv">
+			</div>
 
 			
 		</main>

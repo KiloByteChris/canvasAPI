@@ -17,6 +17,7 @@
 // $result = curl_exec($curl);
 // var_dump($result);
 // echo $result;
+
 function getAvatar() {
 	// Get avatar information from the canvas api and display it on the page
 	$getUrl = "https://clarkcollege.instructure.com/api/v1/users/self/avatars.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
@@ -58,7 +59,20 @@ function getSelf() {
 	echo $nameString;
 }
 
-function getAssignments($course) {
+function getAssignments($data) {
+	$course = $data->course;
+	$getUrl = "https://clarkcollege.instructure.com/api/v1/users/self/courses/".$course."/assignments.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$data = file_get_contents($getUrl); 
+	$data = json_encode($data);
+	$data = json_decode($data);
+	echo $data;
+}
 
+// Code to fire specific php function from ajax request
+if(isset($_GET["action"])){
+	$data = json_encode($_GET);
+	$data = json_decode($data);
+	$action = $_GET["action"];
+	$action($data);
 }
 ?>
