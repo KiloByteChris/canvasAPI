@@ -21,6 +21,7 @@
 		<header>
 			<?php
 				require "includes/functions.inc.php";
+				// Functions from he include file that display data from the Canavs API
 				getAvatar();
 				getSelf();
 				mainMenu();
@@ -28,10 +29,7 @@
 			?>
 		</header>
 		<main>
-			<div id="assignmentsDiv">
-			</div>
-
-			
+			<div id="assignmentsDiv"></div>
 		</main>
 	</div>
 </body>
