@@ -19,6 +19,7 @@
 <body>
 	<div id="wrapper">
 		<header>
+			<h1>Canvas API</h1>
 			<?php
 				require "includes/functions.inc.php";
 				// Functions from he include file that display data from the Canavs API
@@ -31,5 +32,9 @@
 		<main>
 			<div id="assignmentsDiv"></div>
 		</main>
+		<footer>
+			<p>Canvas API</p>
+			<p>Chris McGuire</p>
+		</footer>
 	</div>
 </body>

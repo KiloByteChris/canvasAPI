@@ -9,13 +9,13 @@ function getAvatar() {
 	$getUrl = "https://clarkcollege.instructure.com/api/v1/users/self/avatars.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
 	$data = file_get_contents($getUrl);
 	$data = json_decode($data);
-	$avatarString = "<img src=".$data[0]->url.">";
+	$avatarString = "<img src=".$data[0]->url." id="."avatar".">";
 	echo $avatarString;
 }
 
 function mainMenu() {
 	// Build a header string that links to the homepage
-	$menuString = "<a href="."mycanvas.php".">Home</a>";
+	$menuString = "<a href="."mycanvas.php"." id ="."homeLink".">Home</a>";
 	echo $menuString;
 }
 
