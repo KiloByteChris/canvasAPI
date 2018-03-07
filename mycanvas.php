@@ -5,6 +5,17 @@
 	Canvas API
 	CTEC 290 - API
 	Winter 18
+
+	Description:
+ 	Using the Canvas LMS REST API and PHP, JavaScript, HTML, CSS and MySQL, students are to create a professional looking, responsive, personalized, dynamic dashboard displaying information for the courses they are enrolled in. The dashboard will contain their current grade, upcoming assignments, past assignments, discussion topics, upcoming quizzes, past quizzes and any other relevant information that will make it easier for the student to see their Canvas work.
+
+ 	current grade 
+ 	upcoming assignments
+ 	past assignment 
+ 	discussion topics,
+ 	upcoming quizzes 
+ 	past quizzes
+ 	other relevant information
 -->
 <head>
 	<title>Canvas API</title>

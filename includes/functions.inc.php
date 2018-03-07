@@ -4,11 +4,25 @@
 	$key = "9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
  	$userId = "4337133";
 */
+function callAPI($url) {
+	// Main function used to make API requests using cURL
+	$curl = curl_init(); // Start cURL
+	// Set cURL options
+	curl_setopt($curl, CURLOPT_URL, $url);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+	// Make the request and then close the connection
+	$data = curl_exec($curl);
+	curl_close($curl);
+	// Decode json into a php object before returning the data
+	$data = json_decode($data);
+	return $data;
+}
+
 function getAvatar() {
 	// Get avatar information from the canvas api and display it on the page
-	$getUrl = "https://clarkcollege.instructure.com/api/v1/users/self/avatars.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
-	$data = file_get_contents($getUrl);
-	$data = json_decode($data);
+	$avatarURL = "https://clarkcollege.instructure.com/api/v1/users/self/avatars.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$data = callAPI($avatarURL);
 	$avatarString = "<img src=".$data[0]->url." id="."avatar".">";
 	echo $avatarString;
 }

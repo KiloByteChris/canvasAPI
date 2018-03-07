@@ -10,8 +10,10 @@ $(document).ready( function(){
 			method: "GET",
 			datatype: "json"
 			}).done( function(data) {
+				console.log(data);
 				// Process the results of the ajax request
 				data = JSON.parse(data);
+
 				// Display the assingments
 				var assignmentsString = "<ol>";
 				for(var i=0;i<data.length;i++){
