@@ -96,6 +96,13 @@ function getModuleItemsAPI($data)  {
 	echo $data;
 }
 
+function getModuleItemContentAPI($data) {
+	// Get the contents of a single module item
+	$moduleItemContentURL = "https://clarkcollege.instructure.com/api/v1/courses/".$data->course."/modules/".$data->moduleID."/items/".$data->itemID.".json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$data = callAPI($moduleItemContentURL);
+	echo $data;
+}
+
 function getGrades($data) {
 	$gradesURL = "https://clarkcollege.instructure.com/api/v1/users/4337133/enrollments.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR"; 
 	$data = callAPI($gradesURL);

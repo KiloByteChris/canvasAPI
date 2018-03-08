@@ -83,6 +83,7 @@ $(document).ready( function(){
 		var data = {"course": course};
 		//Empty the info DIV
 		$("#infoDiv").html("");
+		// Create the accordion div
 		$("#infoDiv").append("<div id=\"accordion\"></div>");
 		$.ajax({
 			url: url,
@@ -93,13 +94,13 @@ $(document).ready( function(){
 				data = JSON.parse(data);
 				// Iterate through each module
 				for(var i=0;i<data.length;i++){
+					// Get the url for the api that returns the module items
 					var itemsURL = data[i].items_url;
-					// Begin building a string to display the module content
-					var moduleString = "";
-					moduleString += "<h3>"+data[i].name+"</h3>";
+					// Build a string to display the module content
+					var moduleString = "<h3>"+data[i].name+"</h3>";
 					moduleString += "<div id="+data[i].id+"></div>";
 					$("#accordion").append(moduleString);
-					// Get the items for the module 
+					// Get the items for the module with another ajax request 
 					var url = "includes/functions.inc.php?action=getModuleItemsAPI";
 					var itemData = {"url": itemsURL};
 					$.ajax({
@@ -113,17 +114,31 @@ $(document).ready( function(){
 						for(var i=0;i<moduleData.length;i++) {
 							// Create a header that links to more infomation about the module item
 							// Attach the ID so it can be used to retrieve the item content
-							var moduleItemString = "<h4 class=\"moduleItemLink\" id="+moduleData[i].id+">"+moduleData[i].title+"</h4>";
+							var moduleItemString = "<a href=\"javascript:;\" ><h4 class=\"moduleItemLink\" id="+moduleData[i].id+" value="+moduleData[i].module_id+">"+moduleData[i].title+"</h4></a>";
 							// Select the moduleDiv by id. Then display the module item
 							$("#"+moduleData[i].module_id).append(moduleItemString);
 						}
-
 					});
 				}
 				// Use JQUERY UI to create an accordion from the modules
-						$("#accordion").accordion({
-							heightStyle: "content"
-						});
+				$("#accordion").accordion({
+					heightStyle: "content"
+				});
+		});
+	}
+
+	function getModuleItemContent(moduleID, itemID, course) {
+		// Get the contetnts on an single module item
+		var url = "includes/functions.inc.php?action=getModuleItemContentAPI";
+		var data = {"moduleID": moduleID, "itemID": itemID, "course": course};
+		$.ajax({
+			url: url,
+			data: data,
+			datatype: "json",
+			method: "GET"
+		}).done( function(moduleItemData) {
+			moduleItemData = JSON.parse(moduleItemData);
+			console.log(moduleItemData);
 		});
 	}
 
@@ -153,7 +168,7 @@ $(document).ready( function(){
 			datatype: "json"
 		}).done( function(data){
 			data = JSON.parse(data);
-			console.log(data);
+			//console.log(data);
 		});
 	}
 
@@ -174,8 +189,15 @@ $(document).ready( function(){
 	// MODULES
 	$("nav").on("click", "#moduleButton", function(){
 		var course = $("#selectCourseSelect").val();
-		getModules(course);
-    	
+		getModules(course);	
+	});
+	// MODULE ITEM
+	$("#infoDiv").on("click", ".moduleItemLink", function(){
+		event.preventDefault();
+		var course = $("#selectCourseSelect").val();
+		var itemID = $(this).prop("id");
+		var moduleID = $(this).attr("value");
+		getModuleItemContent(moduleID, itemID, course);	
 	});
 	// GRADES
 	$("nav").on("click", "#gradeButton", function(){
