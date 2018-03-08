@@ -40,8 +40,12 @@
 				getCourses();
 			?>
 		</header>
+		<div id="subheader"></div>
+		<nav>
+		</nav>
 		<main>
-			<div id="assignmentsDiv"></div>
+
+			<div id="infoDiv"></div>
 		</main>
 		<footer>
 			<p>Canvas API</p>
