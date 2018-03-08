@@ -74,14 +74,16 @@ $(document).ready( function(){
 			});
 	}
 
+	/*------------------------------------------------------------
+	------------------------ MODULES -----------------------------
+	------------------------------------------------------------*/
 	function getModules(course) {
 		// Get the modules for the selected course
 		var url = "includes/functions.inc.php?action=getModulesAPI";
 		var data = {"course": course};
 		//Empty the info DIV
 		$("#infoDiv").html("");
-		// Begin JQUERY UI accordian
-		$("#infoDiv").append("<div id=\"accordian\">");
+		$("#infoDiv").append("<div id=\"accordion\"></div>");
 		$.ajax({
 			url: url,
 			data: data,
@@ -96,7 +98,7 @@ $(document).ready( function(){
 					var moduleString = "";
 					moduleString += "<h3>"+data[i].name+"</h3>";
 					moduleString += "<div id="+data[i].id+"></div>";
-					$("#infoDiv").append(moduleString);
+					$("#accordion").append(moduleString);
 					// Get the items for the module 
 					var url = "includes/functions.inc.php?action=getModuleItemsAPI";
 					var itemData = {"url": itemsURL};
@@ -107,19 +109,22 @@ $(document).ready( function(){
 						datatype: "json" 
 					}).done( function(moduleData){
 						moduleData = JSON.parse(moduleData);
-						console.log(moduleData);
 						// Iterate through each item in the module
 						for(var i=0;i<moduleData.length;i++) {
-							var moduleItemString = "<h4>"+moduleData[i].title+"</h4>";
-							console.log(moduleItemString);
-							var moduleDiv = 
+							// Create a header that links to more infomation about the module item
+							// Attach the ID so it can be used to retrieve the item content
+							var moduleItemString = "<h4 class=\"moduleItemLink\" id="+moduleData[i].id+">"+moduleData[i].title+"</h4>";
+							// Select the moduleDiv by id. Then display the module item
 							$("#"+moduleData[i].module_id).append(moduleItemString);
 						}
+
 					});
 				}
+				// Use JQUERY UI to create an accordion from the modules
+						$("#accordion").accordion({
+							heightStyle: "content"
+						});
 		});
-		// End the accordian div
-		$("#infoDiv").append("</div>");
 	}
 
 	function getQuizzes(course) {
@@ -170,6 +175,7 @@ $(document).ready( function(){
 	$("nav").on("click", "#moduleButton", function(){
 		var course = $("#selectCourseSelect").val();
 		getModules(course);
+    	
 	});
 	// GRADES
 	$("nav").on("click", "#gradeButton", function(){

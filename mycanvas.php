@@ -28,8 +28,9 @@
 	<!-- JQUERY UI -->
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<!-- JAVASCRIPT -->
+  	<!-- JAVASCRIPT -->
 	<script src="js/mycanvas.js"></script>
+	
 </head>
 <body>
 	<div id="wrapper">
@@ -49,7 +50,8 @@
 		</nav>
 		<main>
 
-			<div id="infoDiv"></div>
+			<div id="infoDiv">
+			</div>
 		</main>
 		<footer>
 			<p>Canvas API</p>
