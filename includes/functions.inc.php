@@ -43,12 +43,22 @@ function getCourses() {
 	$selectString = "<form id="."selectCourseForm"."><select id="."selectCourseSelect".">";
 	for($i=0;$i<count($data);$i++){
 		if(array_key_exists("name", $data[$i])){
-			$selectString .= "<option value=".$data[$i]->id." name=".$data[$i]->name.">".$data[$i]->name."</option>";
+			$selectString .= "<option value=".$data[$i]->id.">".$data[$i]->name."</option>";
 		}
 	}
 	$selectString .= "</select><button id="."selectCourse".">Select Course</button></form>";
 	// Return html
 	echo $selectString;
+}
+
+function getCourseInfoAPI($data) {
+	// GEts information about a single course
+	$course = $data->course;
+	$courseInfoURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course.".json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$data = callAPI($courseInfoURL);
+	//$data = json_encode($data);
+	echo $data;
+
 }
 
 function getSelf() {
@@ -75,6 +85,14 @@ function getModulesAPI($data) {
 	$course = $data->course;
 	$modulesURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course."/modules.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
 	$data = callAPI($modulesURL);
+	echo $data;
+}
+
+function getModuleItemsAPI($data)  {
+	$itemsURL = $data->url;
+	$itemsURL .= ".json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$data = callAPI($itemsURL);
+	//$data =json_encode($data);
 	echo $data;
 }
 

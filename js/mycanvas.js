@@ -4,6 +4,23 @@ $(document).ready( function(){
 
 	}
 
+	function getCourseInfo(course) {
+		var url = "includes/functions.inc.php?action=getCourseInfoAPI"
+		var data = {"course": course};
+		$.ajax({
+			url: url,
+			data: data,
+			datatype: "json",
+			method: "GET"
+		}).done( function(data) {
+			data = JSON.parse(data);
+			console.log(data);
+			console.log(data.name);
+			var subHeaderString = "<h2>"+data.name+"</h2>";
+			$("#subHeader").html(subHeaderString);	
+		});
+	}
+
 	function displayMenu(course) {
 		// Build a nav menu to get information about the courses
 		var menuString = "";
@@ -70,6 +87,28 @@ $(document).ready( function(){
 			}).done( function(data) {
 				data = JSON.parse(data);
 				console.log(data);
+				var moduleString = "";
+				for(var i=0;i<data.length;i++){
+					var itemsURL = data[i].items_url;
+					console.log(itemsURL);
+					moduleString += "<h3>"+data[i].name+"</h3>";
+					moduleString += "<div id="+data[i].name+"Div\">";
+					// Get the items for the module 
+					var url = "includes/functions.inc.php?action=getModuleItemsAPI";
+					var itemData = {"url": itemsURL};
+					$.ajax({
+					 	url: url,
+					 	data: itemData,
+						method: "GET",
+						datatype: "json" 
+					}).done( function(data){
+						data = JSON.parse(data);
+						console.log(data);
+
+					});
+					moduleString += "</div>";
+				}
+				$("#infoDiv").html(moduleString);
 		});
 	}
 
@@ -109,8 +148,11 @@ $(document).ready( function(){
 		// When the course selct button is clicked, stop the form from posting, and call a funtion to get assingments
 		event.preventDefault();
 		var course = $("#selectCourseSelect").val();
-		var subHeaderString = ""
-		$("#subheaader").html()
+		// Use the course ID to get information about the course
+		getCourseInfo(course);
+		// Display a subheader for the course
+		//var subHeaderString = "<h2>"+courseInfo.name+"</h2>";
+		$("#subheader").html()
 		displayMenu(course);
 		//getAssignments(course);
 	});

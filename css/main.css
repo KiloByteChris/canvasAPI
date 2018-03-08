@@ -42,6 +42,9 @@ h2 {
 	color: #FFF;
 }
 
+#subHeader h2 {
+	color: #000;
+}
 #homeLink {
 	font-size: 2em;
 	text-decoration: none;

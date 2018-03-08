@@ -40,7 +40,7 @@
 				getCourses();
 			?>
 		</header>
-		<div id="subheader"></div>
+		<div id="subHeader"></div>
 		<nav>
 		</nav>
 		<main>
