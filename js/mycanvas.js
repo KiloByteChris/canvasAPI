@@ -14,8 +14,6 @@ $(document).ready( function(){
 			method: "GET"
 		}).done( function(data) {
 			data = JSON.parse(data);
-			console.log(data);
-			console.log(data.name);
 			var subHeaderString = "<h2>"+data.name+"</h2>";
 			$("#subHeader").html(subHeaderString);	
 		});
@@ -77,8 +75,13 @@ $(document).ready( function(){
 	}
 
 	function getModules(course) {
+		// Get the modules for the selected course
 		var url = "includes/functions.inc.php?action=getModulesAPI";
 		var data = {"course": course};
+		//Empty the info DIV
+		$("#infoDiv").html("");
+		// Begin JQUERY UI accordian
+		$("#infoDiv").append("<div id=\"accordian\">");
 		$.ajax({
 			url: url,
 			data: data,
@@ -86,13 +89,14 @@ $(document).ready( function(){
 			datatype: "json"
 			}).done( function(data) {
 				data = JSON.parse(data);
-				console.log(data);
-				var moduleString = "";
+				// Iterate through each module
 				for(var i=0;i<data.length;i++){
 					var itemsURL = data[i].items_url;
-					console.log(itemsURL);
+					// Begin building a string to display the module content
+					var moduleString = "";
 					moduleString += "<h3>"+data[i].name+"</h3>";
-					moduleString += "<div id="+data[i].name+"Div\">";
+					moduleString += "<div id="+data[i].id+"></div>";
+					$("#infoDiv").append(moduleString);
 					// Get the items for the module 
 					var url = "includes/functions.inc.php?action=getModuleItemsAPI";
 					var itemData = {"url": itemsURL};
@@ -101,15 +105,21 @@ $(document).ready( function(){
 					 	data: itemData,
 						method: "GET",
 						datatype: "json" 
-					}).done( function(data){
-						data = JSON.parse(data);
-						console.log(data);
-
+					}).done( function(moduleData){
+						moduleData = JSON.parse(moduleData);
+						console.log(moduleData);
+						// Iterate through each item in the module
+						for(var i=0;i<moduleData.length;i++) {
+							var moduleItemString = "<h4>"+moduleData[i].title+"</h4>";
+							console.log(moduleItemString);
+							var moduleDiv = 
+							$("#"+moduleData[i].module_id).append(moduleItemString);
+						}
 					});
-					moduleString += "</div>";
 				}
-				$("#infoDiv").html(moduleString);
 		});
+		// End the accordian div
+		$("#infoDiv").append("</div>");
 	}
 
 	function getQuizzes(course) {
