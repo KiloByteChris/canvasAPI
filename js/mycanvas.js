@@ -50,6 +50,123 @@ $(document).ready( function(){
 			console.log(data);
 		});
 	}
+	/*--------------------------------------------------------------
+	--------------------- ASSIGNMENTS ------------------------------
+	--------------------------------------------------------------*/
+	function displayAssignmentsTable(data) {
+		// This function takes the data from the getAssignemtns function and displays the assignments as a table
+		$("#infoDiv").html("");
+		//Create a string that creates tables for pst, undated, anf uture assignments
+		var tablesString = "<div id=\"accordion\">";
+			tablesString += "<h4>Future Assignments</h4>";
+				tablesString += "<div id=\"futureAssignments\">";
+				tablesString += "<table id=\"futureAssignmentsTable\">";
+					tablesString += "<tr><th>Assignment</th><th>Possible Points</th><th>Due Date</th></tr>";
+					// check if the assignment is still in the future
+					for(var i=0;i<data.length;i++){
+						var dueDate = data[i].due_at;
+						var now = new Date();
+						var d1 = Date.parse(dueDate);
+						if(now<d1){
+							// check to see if points possible is NULL, if so, assign 0
+							if(data[i].points_possible == null ) {
+								var pointsPossible = "-";
+							}else{
+								var pointsPossible = data[i].points_possible;
+							}
+							tablesString += "<tr>";
+							dueDate = moment(dueDate).format('MMMM Do YYYY, h:mm:ss a');
+							tablesString += "<td>"+data[i].name+"</td><td>"+pointsPossible+"</td><td>"+dueDate+"</td>";
+							tablesString += "</tr>";
+						}
+					}
+				tablesString += "</table>";
+				tablesString += "</div>";
+			tablesString += "<h4>Undated Assignments</h4>";
+				tablesString += "<div id=\"undatedAssignments\">";
+				tablesString += "<table id=\"undatedAssignmentsTable\">";
+					tablesString += "<tr><th>Assignment</th><th>Possible Points</th><th>Due Date</th></tr>";
+					// check if the assignment is still undated
+					for(var i=0;i<data.length;i++){
+						var dueDate = data[i].due_at;
+						if(dueDate == null){
+							// check to see if points possible is NULL, if so, assign 0
+							if(data[i].points_possible == null ) {
+								var pointsPossible = "-";
+							}else{
+								var pointsPossible = data[i].points_possible;
+							}
+							tablesString += "<tr>";
+							dueDate = moment(dueDate).format('MMMM Do YYYY, h:mm:ss a');
+							tablesString += "<td>"+data[i].name+"</td><td>"+pointsPossible+"</td><td>"+dueDate+"</td>";
+							tablesString += "</tr>";
+						}
+					}
+				tablesString += "</table>";
+				tablesString += "</div>";
+			tablesString += "<h4>Past Assignments</h4>";
+				tablesString += "<div id=\"pastAssignments\">";
+				tablesString += "<table id=\"pastAssignmentsTable\">";
+					tablesString += "<tr><th>Assignment</th><th>Possible Points</th><th>Due Date</th></tr>";
+					// check if the assignment is still in the future
+					for(var i=0;i<data.length;i++){
+						var dueDate = data[i].due_at;
+						var now = new Date();
+						var d1 = Date.parse(dueDate);
+						if(now>d1){
+							// check to see if points possible is NULL, if so, assign 0
+							if(data[i].points_possible == null ) {
+								var pointsPossible = "-";
+							}else{
+								var pointsPossible = data[i].points_possible;
+							}
+							tablesString += "<tr>";
+							dueDate = moment(dueDate).format('MMMM Do YYYY, h:mm:ss a');
+							tablesString += "<td>"+data[i].name+"</td><td>"+pointsPossible+"</td><td>"+dueDate+"</td>";
+							tablesString += "</tr>";
+						}
+					}
+				tablesString += "</table>";
+				tablesString += "</div>";
+		tablesString += "</div>"; // end accordion
+		$("#infoDiv").html(tablesString);
+		$("#accordion").accordion();
+		//$infoDiv.append("<div id=\"accordion\"></div>");
+		
+		//assignmentsString += "<tr><th>Assignment</th><th>Possible Points</th><th>Due Date</th></tr>";
+
+		// for(var i=0;i<data.length;i++){
+		// 	assignmentsString += "<tr>";
+		// 	// check to see if points possible is NULL, if so, assign 0
+		// 	if(data[i].points_possible == null ) {
+		// 		var pointsPossible = "-";
+		// 	}else{
+		// 		var pointsPossible = data[i].points_possible;
+		// 	}
+		// 	// Check if the due date is null
+		// 	if(data[i].due_at == null ) {
+		// 		var dueDate = "-";
+		// 		var dateCatagory = "noDate"
+		// 	}else{
+		// 		// If there is a date, check if it's before now
+		// 		var dueDate = data[i].due_at;
+		// 		var now = new Date();
+		// 		var d1 = Date.parse(dueDate);
+		// 		if(now>d1){
+		// 			var dateCatagory = "past";
+		// 		}else {
+		// 			var dateCatagory = "future";
+		// 		}
+		// 		// Use moment.js to change tho format of the date so that it is more human readable
+		// 		dueDate = moment(dueDate).format('MMMM Do YYYY, h:mm:ss a');
+		// 	}
+		// 	//Construct the table rows
+		// 	assignmentsString += "<th>"+data[i].name+"</th><th>"+pointsPossible+"</th><th>"+dueDate+"</th>";
+		// 	assignmentsString += "</tr>";
+		// }
+		//assignmentsString += "</table>";
+		
+	}
 
 	function getAssignments(course) {
 		// Get all assignments for the selected Canvas course
@@ -64,13 +181,9 @@ $(document).ready( function(){
 				// Process the results of the ajax request
 				data = JSON.parse(data);
 				// Display the assingments
-				//console.log(data);
-				var assignmentsString = "<ol>";
-				for(var i=0;i<data.length;i++){
-					assignmentsString += "<li>"+data[i].name+"</li>";
-				}
-				assignmentsString += "</ol>";
-				$("#infoDiv").html(assignmentsString);
+				console.log(data);
+				displayAssignmentsTable(data);
+				
 			});
 	}
 
