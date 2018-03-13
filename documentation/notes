@@ -1,9 +1,9 @@
 current grade 
 upcoming assignments
-past assignment 
+	past assignment 
 discussion topics,
 upcoming quizzes 
-past quizzes
+	past quizzes
 other relevant information
 
 Landing:
@@ -15,3 +15,10 @@ Nav:
 	links for:
 		DAshoboard/home
 		courses
+
+3/12/18 notes
+-Why does the courses thing return old courses? 
+-Modules only goes to the module, how to I display info for indavidule modules? I already set up an api but then went to assignments.
+-Get rid of the grades button and just display the current grade with the heading
+- Try to finish development today and switch to style on wednesday
+- Make the paghe auto update when the select box is selected? Instead of using the button?

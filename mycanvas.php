@@ -44,7 +44,7 @@
 				getAvatar();
 				getSelf();
 				mainMenu();
-				getCourses();
+				displayCourseSelect();
 			?>
 		</header>
 		<div id="subHeader"></div>
