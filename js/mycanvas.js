@@ -44,19 +44,31 @@ $(document).ready( function(){
 			data = JSON.parse(data);
 			console.log(data);
 			for (var i = 0 ; i < data.length; i++) {
+				// Select to correct course from the enrollment object
 				if(data[i].course_id == course){
-					console.log(data[i].grades["current_score"]);
-			}}
-			
+					// Display the current score int he class
+					$("#gradeDiv").html("");
+					var gradeString = "<p id=\"grade\">Current Score: "+data[i].grades["current_score"]+"</p>";
+					$("#gradeDiv").html(gradeString);
+				}
+				// If no current score information is given. display "-"
+				if(typeof gradeString == "undefined"){
+					$("#gradeDiv").html("");
+					var gradeString = "<p id=\"grade\">Current Score: - </p>";
+					$("#gradeDiv").html(gradeString);
+				}
+			}
 		});
 	}
+
 	/*--------------------------------------------------------------
 	--------------------- ASSIGNMENTS ------------------------------
 	--------------------------------------------------------------*/
 	function displayAssignmentsTable(data) {
-		// This function takes the data from the getAssignemtns function and displays the assignments as a table
+		// This function takes the data from the getAssignemtns function and displays the assignments as 3 differnt tables
+		// There are tables for past, undated, and future assignments.
 		$("#infoDiv").html("");
-		//Create a string that creates tables for pst, undated, anf uture assignments
+		//Create a string that creates tables for past, undated, and future assignments
 		var tablesString = "<div id=\"accordion\">";
 			tablesString += "<h4>Future Assignments</h4>";
 				tablesString += "<div id=\"futureAssignments\">";
@@ -76,7 +88,7 @@ $(document).ready( function(){
 							}
 							tablesString += "<tr>";
 							dueDate = moment(dueDate).format('MMMM Do YYYY, h:mm:ss a');
-							tablesString += "<td>"+data[i].name+"</td><td>"+pointsPossible+"</td><td>"+dueDate+"</td>";
+							tablesString += "<td><a href="+data[i].html_url+">"+data[i].name+"</a></td><td>"+pointsPossible+"</td><td>"+dueDate+"</td>";
 							tablesString += "</tr>";
 						}
 					}
@@ -98,7 +110,7 @@ $(document).ready( function(){
 							}
 							tablesString += "<tr>";
 							dueDate = moment(dueDate).format('MMMM Do YYYY, h:mm:ss a');
-							tablesString += "<td>"+data[i].name+"</td><td>"+pointsPossible+"</td><td>"+dueDate+"</td>";
+							tablesString += "<td><a href="+data[i].html_url+">"+data[i].name+"</a></td><td>"+pointsPossible+"</td><td>"+dueDate+"</td>";
 							tablesString += "</tr>";
 						}
 					}
@@ -122,7 +134,7 @@ $(document).ready( function(){
 							}
 							tablesString += "<tr>";
 							dueDate = moment(dueDate).format('MMMM Do YYYY, h:mm:ss a');
-							tablesString += "<td>"+data[i].name+"</td><td>"+pointsPossible+"</td><td>"+dueDate+"</td>";
+							tablesString += "<td><a href="+data[i].html_url+">"+data[i].name+"</a></td><td>"+pointsPossible+"</td><td>"+dueDate+"</td>";
 							tablesString += "</tr>";
 						}
 					}
@@ -130,42 +142,7 @@ $(document).ready( function(){
 				tablesString += "</div>";
 		tablesString += "</div>"; // end accordion
 		$("#infoDiv").html(tablesString);
-		$("#accordion").accordion();
-		//$infoDiv.append("<div id=\"accordion\"></div>");
-		
-		//assignmentsString += "<tr><th>Assignment</th><th>Possible Points</th><th>Due Date</th></tr>";
-
-		// for(var i=0;i<data.length;i++){
-		// 	assignmentsString += "<tr>";
-		// 	// check to see if points possible is NULL, if so, assign 0
-		// 	if(data[i].points_possible == null ) {
-		// 		var pointsPossible = "-";
-		// 	}else{
-		// 		var pointsPossible = data[i].points_possible;
-		// 	}
-		// 	// Check if the due date is null
-		// 	if(data[i].due_at == null ) {
-		// 		var dueDate = "-";
-		// 		var dateCatagory = "noDate"
-		// 	}else{
-		// 		// If there is a date, check if it's before now
-		// 		var dueDate = data[i].due_at;
-		// 		var now = new Date();
-		// 		var d1 = Date.parse(dueDate);
-		// 		if(now>d1){
-		// 			var dateCatagory = "past";
-		// 		}else {
-		// 			var dateCatagory = "future";
-		// 		}
-		// 		// Use moment.js to change tho format of the date so that it is more human readable
-		// 		dueDate = moment(dueDate).format('MMMM Do YYYY, h:mm:ss a');
-		// 	}
-		// 	//Construct the table rows
-		// 	assignmentsString += "<th>"+data[i].name+"</th><th>"+pointsPossible+"</th><th>"+dueDate+"</th>";
-		// 	assignmentsString += "</tr>";
-		// }
-		//assignmentsString += "</table>";
-		
+		$("#accordion").accordion();	
 	}
 
 	function getAssignments(course) {
@@ -315,7 +292,8 @@ $(document).ready( function(){
 	// GRADES
 	$("nav").on("click", "#gradeButton", function(){
 		var course = $("#selectCourseSelect").val();
-		getGrades(course);
+		var grade = getGrades(course);
+		console.log(grade);
 	});
 	// ASSIGNMENTS
 	$("nav").on("click", "#assignmentButton", function(){

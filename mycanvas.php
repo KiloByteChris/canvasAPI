@@ -40,7 +40,11 @@
 				displayCourseSelect();
 			?>
 		</header>
-		<div id="subHeader"></div>
+		<div id="subHeader">
+
+		</div>
+		<div id="gradeDiv">
+		</div>
 		<nav>
 		</nav>
 		<main>
