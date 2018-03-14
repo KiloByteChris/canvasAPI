@@ -1,9 +1,4 @@
 $(document).ready( function(){
-	function selectCourse(course) {
-		// Function that takes you from the dashboard to the course dashboard
-
-	}
-
 	function getCourseInfo(course) {
 		var url = "includes/functions.inc.php?action=getCourseInfoAPI"
 		var data = {"course": course};
@@ -50,7 +45,6 @@ $(document).ready( function(){
 			console.log(data);
 			for (var i = 0 ; i < data.length; i++) {
 				if(data[i].course_id == course){
-
 					console.log(data[i].grades["current_score"]);
 			}}
 			
@@ -291,19 +285,6 @@ $(document).ready( function(){
 		});
 	}
 
-	function getAnnouncements() {
-		// Get any annoucments for this account
-		var url = "includes/functions.inc.php?action=getAnnouncementsAPI";
-		$.ajax({
-			url : url,
-			method : "GET"
-		}).done( function(data) {
-			console.log(typeof data);
-			console.log(data);
-
-		});
-	}
-
 	/*--------------------- CLICK EVENTS ------------------------*/
 	// SELECT COURSE
 	$("#selectCourseForm").on("click", "#selectCourse", function(){
@@ -352,7 +333,4 @@ $(document).ready( function(){
 		var course = $("#selectCourseSelect").val();
 		getDiscussions(course);
 	});
-
-	getAnnouncements();
-
 });

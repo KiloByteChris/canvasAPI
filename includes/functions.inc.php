@@ -132,32 +132,6 @@ function getDiscussionsAPI($data) {
 	echo $data;
 }
 
-// function getAnnouncementsAPI() {
-// 	// Get any announcements that apply to the account and display them when the user first visists the site
-// 	$data = getCourses();
-// 	$data = json_decode($data);
-// 	// create a number a string that tells to canvas api what courses the user is in. "context codes"
-// 	// $contextCodes = "&context_codes[]=";
-// 	// for($i=0;$i<count($data);$i++){
-// 	// 	if($i == count($data) - 1) {
-// 	// 		$contextCodes .= "course_".$data[$i]->id;
-// 	// 	}else {
-// 	// 		$contextCodes .= "course_".$data[$i]->id."&";
-// 	// 	}
-// 	// }
-// 	// $announcementsURL = "https://clarkcollege.instructure.com/api/v1/announcements.json";
-// 	// //append the contextCodes onto the main URL
-// 	// $accessKey = "?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
-// 	// $announcementsURL .= $accessKey;
-// 	// $announcementsURL .= $contextCodes;
-// 	// 1347559
-// 	$announcementsURL = "https://clarkcollege.instructure.com/api/v1/announcements.json?context_codes[]=course_1347559&access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
-// 	echo $announcementsURL;
-// 	$data = callAPI($announcementsURL);
-// 	$data = json_encode($data);
-// 	echo $data; 
-// }
-
 // Code to fire specific php function from ajax request
 if(isset($_GET["action"])){
 	$data = json_encode($_GET);

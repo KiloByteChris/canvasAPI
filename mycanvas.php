@@ -7,15 +7,8 @@
 	Winter 18
 
 	Description:
- 	Using the Canvas LMS REST API and PHP, JavaScript, HTML, CSS and MySQL, students are to create a professional looking, responsive, personalized, dynamic dashboard displaying information for the courses they are enrolled in. The dashboard will contain their current grade, upcoming assignments, past assignments, discussion topics, upcoming quizzes, past quizzes and any other relevant information that will make it easier for the student to see their Canvas work.
+ 	This program uses the a private api key to request student information from canvas. It allows the user to view assignments, quizzes, discussions and modules for the classes they are currently enrolled it (or the courses where view in enables).
 
- 	current grade 
- 	upcoming assignments
- 	past assignment 
- 	discussion topics,
- 	upcoming quizzes 
- 	past quizzes
- 	other relevant information
 -->
 <head>
 	<title>Canvas API</title>
