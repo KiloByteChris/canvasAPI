@@ -1,9 +1,9 @@
 <?php
 /*
 	functions for mycanvas.php
-	$key = "9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
- 	$userId = "4337133";
 */
+
+ session_start();
 
 function callAPI($url) {
 	// Main function used to make API requests using cURL
@@ -20,7 +20,7 @@ function callAPI($url) {
 
 function getAvatar() {
 	// Get avatar information from the canvas api and display it on the page
-	$avatarURL = "https://clarkcollege.instructure.com/api/v1/users/self/avatars.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$avatarURL = "https://clarkcollege.instructure.com/api/v1/users/self/avatars.json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($avatarURL);
 	$data = json_decode($data);
 	$avatarString = "<img src=".$data[0]->url." id="."avatar".">";
@@ -35,14 +35,20 @@ function mainMenu() {
 
 function getCourse($course) {
 	// Get data about a course based on the courses id number
-	$coursesURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course.".json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$coursesURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course.".json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($coursesURL);
 	return $data;
 }
 
 function getEnrollments() {
 	// Use the enrollments api to get data about the classes the user is enrolled in
-	$enrollmentsURL = "https://clarkcollege.instructure.com/api/v1/users/4337133/enrollments.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR"; 
+	//Get the user ID
+	$selfURL = "https://clarkcollege.instructure.com/api/v1/users/self/profile.json?access_token=".$_SESSION['apiKey'];
+	$selfData = callAPI($selfURL);
+	$selfData = json_decode($selfData);
+	$id = $selfData->id;
+	// Use the user id to get enrollment information
+	$enrollmentsURL = "https://clarkcollege.instructure.com/api/v1/users/".$id."/enrollments.json?access_token=".$_SESSION['apiKey']; 
 	$data = callAPI($enrollmentsURL);
 	return $data;
 }
@@ -75,7 +81,7 @@ function displayCourseSelect() {
 function getCourseInfoAPI($data) {
 	// GEts information about a single course
 	$course = $data->course;
-	$courseInfoURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course.".json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$courseInfoURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course.".json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($courseInfoURL);
 	//$data = json_encode($data);
 	echo $data;
@@ -84,7 +90,7 @@ function getCourseInfoAPI($data) {
 
 function getSelf() {
 	// Get user infomration
-	$selfURL = "https://clarkcollege.instructure.com/api/v1/users/self/profile.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$selfURL = "https://clarkcollege.instructure.com/api/v1/users/self/profile.json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($selfURL);
 	$data = json_decode($data);
 	$nameString = "<h2>".$data->name."</h2>";
@@ -94,7 +100,7 @@ function getSelf() {
 function getAssignments($data) {
 	// Get assignments based on the selected course
 	$course = $data->course;
-	$assignmentsURL = "https://clarkcollege.instructure.com/api/v1/users/self/courses/".$course."/assignments.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$assignmentsURL = "https://clarkcollege.instructure.com/api/v1/users/self/courses/".$course."/assignments.json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($assignmentsURL);
 	// $data = file_get_contents($assignmentsURL); 
 	//$data = json_encode($data);
@@ -104,14 +110,14 @@ function getAssignments($data) {
 
 function getModulesAPI($data) {
 	$course = $data->course;
-	$modulesURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course."/modules.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$modulesURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course."/modules.json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($modulesURL);
 	echo $data;
 }
 
 function getModuleItemsAPI($data)  {
 	$itemsURL = $data->url;
-	$itemsURL .= ".json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$itemsURL .= ".json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($itemsURL);
 	//$data =json_encode($data);
 	echo $data;
@@ -119,13 +125,13 @@ function getModuleItemsAPI($data)  {
 
 function getModuleItemContentAPI($data) {
 	// Get the contents of a single module item
-	$moduleItemContentURL = "https://clarkcollege.instructure.com/api/v1/courses/".$data->course."/modules/".$data->moduleID."/items/".$data->itemID.".json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$moduleItemContentURL = "https://clarkcollege.instructure.com/api/v1/courses/".$data->course."/modules/".$data->moduleID."/items/".$data->itemID.".json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($moduleItemContentURL);
 	echo $data;
 }
 
 function getGrades($data) {
-	$gradesURL = "https://clarkcollege.instructure.com/api/v1/users/4337133/enrollments.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR"; 
+	$gradesURL = "https://clarkcollege.instructure.com/api/v1/users/4337133/enrollments.json?access_token=".$_SESSION['apiKey']; 
 	$data = callAPI($gradesURL);
 	//$data =json_encode($data);
 	echo $data;
@@ -133,7 +139,7 @@ function getGrades($data) {
 
 function getQuizzesAPI($data) {
 	$course = $data->course;
-	$quizzesURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course."/quizzes.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$quizzesURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course."/quizzes.json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($quizzesURL);
 	print_r($data);
 	$data =json_encode($data);
@@ -142,7 +148,7 @@ function getQuizzesAPI($data) {
 
 function getDiscussionsAPI($data) {
 	$course = $data->course;
-	$discussionsURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course."/discussion_topics.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$discussionsURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course."/discussion_topics.json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($discussionsURL);
 	//$data = json_encode($data);
 	echo $data;
@@ -151,7 +157,7 @@ function getDiscussionsAPI($data) {
 function getAssignmentGrade($data) {
 	$course = $data->course;
 	$id = $data->assignment;
-	$gradeURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course."/assignments/".$id."/submissions/4337133.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$gradeURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course."/assignments/".$id."/submissions/4337133.json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($gradeURL);
 	echo $data;
 }
