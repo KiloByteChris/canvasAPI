@@ -33,26 +33,36 @@ function mainMenu() {
 	echo $menuString;
 }
 
-function getCourses() {
-	// Get json data for courses and populate a select box
-	//$coursesURL = "https://clarkcollege.instructure.com/api/v1/courses.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
-	$coursesURL = "https://clarkcollege.instructure.com/api/v1/users/4337133/courses.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+function getCourse($course) {
+	// Get data about a course based on the courses id number
+	$coursesURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course.".json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
 	$data = callAPI($coursesURL);
 	return $data;
 }
 
+function getEnrollments() {
+	// Use the enrollments api to get data about the classes the user is enrolled in
+	$enrollmentsURL = "https://clarkcollege.instructure.com/api/v1/users/4337133/enrollments.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR"; 
+	$data = callAPI($enrollmentsURL);
+	return $data;
+}
+
 function displayCourseSelect() {
-	// Create a select box that allows the user to pick the courses
-	$data = getCourses();
-	$data = json_decode($data);
+	// Function creates a select box that allows the user to pick the courses
 	$selectString = "<form id="."selectCourseForm"."><select id="."selectCourseSelect".">";
-	for($i=0;$i<count($data);$i++){
-		if(array_key_exists("name", $data[$i])){ 
-			$selectString .= "<option value=".$data[$i]->id.">".$data[$i]->name."</option>";
-		}
+	// Get course id numbers from the enrollments api
+	$enrollmentsData = getEnrollments();
+	$enrollmentsData = json_decode($enrollmentsData);
+	// Use the course id number from the enrollments api to get information about each course
+	for($i=0;$i<count($enrollmentsData);$i++) {
+		$course = $enrollmentsData[$i]->course_id;
+		// Uses the Courses API to get data
+		$courseData = getCourse($course);
+		$courseData = json_decode($courseData);
+		// Builds a string to populate the select box
+		$selectString .= "<option value=".$courseData->id.">".$courseData->name."</option>";
 	}
 	$selectString .= "</select><button id="."selectCourse".">Select Course</button></form>";
-	// Return html
 	echo $selectString;
 }
 
@@ -126,7 +136,7 @@ function getQuizzesAPI($data) {
 
 function getDiscussionsAPI($data) {
 	$course = $data->course;
-	$discussionsURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course."/discussion_topics.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$discussionsURL = "https://clarkcollege.instructure.com/api/v1/courses/1510728/discussion_topics.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
 	$data = callAPI($discussionsURL);
 	$data = json_encode($data);
 	echo $data;

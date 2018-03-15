@@ -97,8 +97,8 @@ $(document).ready( function(){
 			tablesString += "<h4>Undated Assignments</h4>";
 				tablesString += "<div id=\"undatedAssignments\">";
 				tablesString += "<table id=\"undatedAssignmentsTable\">";
-					tablesString += "<tr><th>Assignment</th><th>Possible Points</th><th>Due Date</th></tr>";
-					// check if the assignment is still undated
+					tablesString += "<tr><th>Assignment</th><th>Possible Points</th><th>Score</th></tr>";
+					// check if the assignment is undated
 					for(var i=0;i<data.length;i++){
 						var dueDate = data[i].due_at;
 						if(dueDate == null){
@@ -109,9 +109,10 @@ $(document).ready( function(){
 								var pointsPossible = data[i].points_possible;
 							}
 							tablesString += "<tr>";
-							dueDate = moment(dueDate).format('MMMM Do YYYY, h:mm:ss a');
-							tablesString += "<td><a href="+data[i].html_url+">"+data[i].name+"</a></td><td>"+pointsPossible+"</td><td>"+dueDate+"</td>";
+							//dueDate = moment(dueDate).format('MMMM Do YYYY, h:mm:ss a');
+							tablesString += "<td><a href="+data[i].html_url+">"+data[i].name+"</a></td><td>"+pointsPossible+"</td><td id="+data[i].id+"Grade"+"></td>";
 							tablesString += "</tr>";
+							getAssignmentGrade(data[i].course_id, data[i].id);
 						}
 					}
 				tablesString += "</table>";
@@ -119,7 +120,7 @@ $(document).ready( function(){
 			tablesString += "<h4>Past Assignments</h4>";
 				tablesString += "<div id=\"pastAssignments\">";
 				tablesString += "<table id=\"pastAssignmentsTable\">";
-					tablesString += "<tr><th>Assignment</th><th>Possible Points</th><th>Due Date</th></tr>";
+					tablesString += "<tr><th>Assignment</th><th>Possible Points</th><th>Score</th><th>Due Date</th></tr>";
 					// check if the assignment is still in the future
 					for(var i=0;i<data.length;i++){
 						var dueDate = data[i].due_at;
@@ -134,7 +135,7 @@ $(document).ready( function(){
 							}
 							tablesString += "<tr>";
 							dueDate = moment(dueDate).format('MMMM Do YYYY, h:mm:ss a');
-							tablesString += "<td><a href="+data[i].html_url+">"+data[i].name+"</a></td><td id="+data[i].id+"Grade"+"></td><td>"+dueDate+"</td>";
+							tablesString += "<td><a href="+data[i].html_url+">"+data[i].name+"</a></td><td>"+pointsPossible+"</td><td id="+data[i].id+"Grade"+"></td><td>"+dueDate+"</td>";
 							tablesString += "</tr>";
 							getAssignmentGrade(data[i].course_id, data[i].id);
 						}
@@ -281,8 +282,8 @@ $(document).ready( function(){
 			method: "GET",
 			datatype: "json"
 		}).done( function(data){
-			data = JSON.parse(data);
-			//console.log(data);
+			//data = JSON.parse(data);
+			console.log(data);
 		});
 	}
 
