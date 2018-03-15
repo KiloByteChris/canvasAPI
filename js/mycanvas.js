@@ -26,6 +26,9 @@ $(document).ready( function(){
 		menuString += "<li><button class=\"navButton\" id=\"assignmentButton\" value="+course+">Assignments</button></li>";
 		menuString += "<li><button class=\"navButton\" id=\"quizButton\" value="+course+">Quizes</button></li>";
 		menuString += "<li><button class=\"navButton\" id=\"discussionButton\" value="+course+">Discussions</button></li>";
+		// Hardcoded discussion button to show the discusson topics from a class I'm no longer enrolled in 
+		// This is the only class that has discussion information
+		//menuString += "<li><button class=\"navButton\" id=\"discussionButton145\" value=\"1510728\">Discussions for CTEC - 145</button></li>";
 		menuString += "</ul>";
 		// Display the menu
 		$("nav").html(menuString);
@@ -229,7 +232,7 @@ $(document).ready( function(){
 						for(var i=0;i<moduleData.length;i++) {
 							// Create a header that links to more infomation about the module item
 							// Attach the ID so it can be used to retrieve the item content
-							var moduleItemString = "<a href=\"javascript:;\" ><h4 class=\"moduleItemLink\" id="+moduleData[i].id+" value="+moduleData[i].module_id+">"+moduleData[i].title+"</h4></a>";
+							var moduleItemString = "<a href="+moduleData[i].html_url+" ><h4 class=\"moduleItemLink\" id="+moduleData[i].id+" value="+moduleData[i].module_id+">"+moduleData[i].title+"</h4></a>";
 							// Select the moduleDiv by id. Then display the module item
 							$("#"+moduleData[i].module_id).append(moduleItemString);
 						}
@@ -257,6 +260,9 @@ $(document).ready( function(){
 		});
 	}
 
+	/*------------------------------------------------------------
+	------------------------ QUIZZES -----------------------------
+	------------------------------------------------------------*/
 	function getQuizzes(course) {
 		// Get the quizzes associated with a course
 		var url = "includes/functions.inc.php?action=getQuizzesAPI";
@@ -272,6 +278,9 @@ $(document).ready( function(){
 		});
 	}
 
+	/*------------------------------------------------------------
+	------------------------ DISCUSSIONS -------------------------
+	------------------------------------------------------------*/
 	function getDiscussions(course) {
 		// Get discussion info for the user
 		var url = "includes/functions.inc.php?action=getDiscussionsAPI";
@@ -282,12 +291,92 @@ $(document).ready( function(){
 			method: "GET",
 			datatype: "json"
 		}).done( function(data){
-			//data = JSON.parse(data);
+			data = JSON.parse(data);
 			console.log(data);
+			//Clear the page
+			$("#infoDiv").html("");
+			// Check to see if the discussions request returned any data
+			if(data.length > 0){
+				// If there is data, build a string to display the discussion data
+				var discussionString = "<div id=\"accordion\">";
+					// Begin Upcoming discussions
+						discussionString += "<h3>Upcoming Discussions</h3>";
+						discussionString += "<div id=\"openDiscussionsDiv\">";
+						discussionString += "<table id=\"upcomingDiscussionsTable\">";
+						discussionString += "<tr><th>Discussions</th><th>Points</th><th>Due Date</th>";
+						// Iterate through the discussion data
+						for(var i = 0; i < data.length; i++){
+							console.log(data[i]);
+							// Check to see if the due date for the discussion has expired
+							var dueDate = data[i].assignment.due_at;
+							var now = new Date();
+							var d1 = Date.parse(dueDate);
+							// Count to see if there are any upcoming discussions
+							var j = 0;
+							if(now<d1){
+								j++
+								discussionString += "<tr>";
+								discussionString += "<td><a href="+data[i].html_url+"<h4>"+data[i].title+"</h4></a></td>";
+								discussionString += "<td>"+data[i].assignment["points_possible"]+"</td>";
+								discussionString += "<td>"+d1+"</td>";
+								discussionString += "</tr>";
+							}
+						}
+						// Check to see if there are any discussions, display a message if not
+						if(j==0){
+								discussionString += "<h4>No Upcoming Discusions</h4>";
+						}
+					discussionString +="</table>";
+					discussionString +="</div>";// End of open discussions div
+					// Begin past Discussions
+					discussionString += "<h3>Past Discussions</h3>";
+						discussionString += "<div id=\"pastDiscussionsDiv\">";
+						discussionString += "<table id=\"upcomingDiscussionsTable\">";
+						discussionString += "<tr><th>Discussions</th><th>Points</th><th>Due Date</th>";
+						// Iterate through the discussion data
+						for(var i = 0; i < data.length; i++){
+							console.log(data[i]);
+							//Check to see if the due date for the discussion has expired
+							var dueDate = data[i].assignment.due_at;
+							var now = new Date();
+							var d1 = Date.parse(dueDate);
+							var j = 0;
+							if(now>d1){
+								j++;
+								discussionString += "<tr>";
+								discussionString += "<td><a href="+data[i].html_url+"<h4>"+data[i].title+"</h4></a></td>";
+								discussionString += "<td>"+data[i].assignment["points_possible"]+"</td>";
+								discussionString += "<td>"+d1+"</td>";
+								discussionString += "</tr>";
+							}
+						}
+						// Check to see if there are any discussions, display a message if not
+						if(j==0){
+								discussionString += "<h4>No Past Discussions</h4>";
+						}
+					discussionString += "</table>";
+					discussionString += "</div>";//End of past discussions div
+				discussionString += "</div>";//End accordion div
+				$("#infoDiv").html(discussionString);
+				
+			}else if(data.length == 0){
+				// If the API request for discussion data didn't return any data, tell the user that there is no discussion data 
+				// Build a string to display the messege
+				var discussionString = "<h4>There are no discussions for this course</h4>";
+				$("#infoDiv").html(discussionString);
+
+			}
+			// JQUERY UI accordion
+			$("#accordion").accordion({
+					heightStyle: "content"
+			});
+			
 		});
 	}
 
-	/*--------------------- CLICK EVENTS ------------------------*/
+	/*----------------------------------------------------------
+	--------------------- CLICK EVENTS -------------------------
+	-----------------------------------------------------------*/
 	// SELECT COURSE
 	$("#selectCourseForm").on("click", "#selectCourse", function(){
 		// When the course selct button is clicked, stop the form from posting, and call a funtion to get assingments
@@ -336,4 +425,10 @@ $(document).ready( function(){
 		var course = $("#selectCourseSelect").val();
 		getDiscussions(course);
 	});
+	// Special button to display discussion topics from a class I'm nolonger enrolled in
+	// Only for demonstration
+	// $("nav").on("click", "#discussionButton145", function(){
+	// 	var course = $("#discussionButton145").val();
+	// 	getDiscussions(course);
+	// });
 });

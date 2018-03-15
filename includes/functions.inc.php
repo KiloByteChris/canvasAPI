@@ -62,6 +62,10 @@ function displayCourseSelect() {
 		// Builds a string to populate the select box
 		$selectString .= "<option value=".$courseData->id.">".$courseData->name."</option>";
 	}
+	// Add another option to the select 
+	// This will aloow me to view a course that I'm nolonger enrolled in
+	// The reason for this is to display discussion data
+	$selectString .= "<option value=\"1510728\">CTEC 145 F17 2514 - WEB SERVER TECHNOLOGY</option>";
 	$selectString .= "</select><button id="."selectCourse".">Select Course</button></form>";
 	echo $selectString;
 }
@@ -136,9 +140,9 @@ function getQuizzesAPI($data) {
 
 function getDiscussionsAPI($data) {
 	$course = $data->course;
-	$discussionsURL = "https://clarkcollege.instructure.com/api/v1/courses/1510728/discussion_topics.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$discussionsURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course."/discussion_topics.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
 	$data = callAPI($discussionsURL);
-	$data = json_encode($data);
+	//$data = json_encode($data);
 	echo $data;
 }
 
