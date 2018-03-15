@@ -21,14 +21,11 @@ $(document).ready( function(){
 		//$("nav").html(menuString);
 		// Build the string
 		menuString += "<ul>";
-		menuString += "<li><button class=\"navButton\" id=\"gradeButton\" value="+course+">Grades</button></li>";
+		//menuString += "<li><button class=\"navButton\" id=\"gradeButton\" value="+course+">Grades</button></li>";
 		menuString += "<li><button class=\"navButton\" id=\"moduleButton\" value="+course+">Modules</button></li>";
 		menuString += "<li><button class=\"navButton\" id=\"assignmentButton\" value="+course+">Assignments</button></li>";
 		menuString += "<li><button class=\"navButton\" id=\"quizButton\" value="+course+">Quizes</button></li>";
 		menuString += "<li><button class=\"navButton\" id=\"discussionButton\" value="+course+">Discussions</button></li>";
-		// Hardcoded discussion button to show the discusson topics from a class I'm no longer enrolled in 
-		// This is the only class that has discussion information
-		//menuString += "<li><button class=\"navButton\" id=\"discussionButton145\" value=\"1510728\">Discussions for CTEC - 145</button></li>";
 		menuString += "</ul>";
 		// Display the menu
 		$("nav").html(menuString);
@@ -228,6 +225,7 @@ $(document).ready( function(){
 						datatype: "json" 
 					}).done( function(moduleData){
 						moduleData = JSON.parse(moduleData);
+
 						// Iterate through each item in the module
 						for(var i=0;i<moduleData.length;i++) {
 							// Create a header that links to more infomation about the module item
@@ -316,7 +314,7 @@ $(document).ready( function(){
 							if(now<d1){
 								j++
 								discussionString += "<tr>";
-								discussionString += "<td><a href="+data[i].html_url+"<h4>"+data[i].title+"</h4></a></td>";
+								discussionString += "<td><a href="+data[i].html_url+"><h4>"+data[i].title+"</h4></a></td>";
 								discussionString += "<td>"+data[i].assignment["points_possible"]+"</td>";
 								discussionString += "<td>"+d1+"</td>";
 								discussionString += "</tr>";
@@ -344,7 +342,7 @@ $(document).ready( function(){
 							if(now>d1){
 								j++;
 								discussionString += "<tr>";
-								discussionString += "<td><a href="+data[i].html_url+"<h4>"+data[i].title+"</h4></a></td>";
+								discussionString += "<td><a href="+data[i].html_url+"><h4>"+data[i].title+"</h4></a></td>";
 								discussionString += "<td>"+data[i].assignment["points_possible"]+"</td>";
 								discussionString += "<td>"+d1+"</td>";
 								discussionString += "</tr>";
@@ -369,8 +367,7 @@ $(document).ready( function(){
 			// JQUERY UI accordion
 			$("#accordion").accordion({
 					heightStyle: "content"
-			});
-			
+			});	
 		});
 	}
 
@@ -381,6 +378,7 @@ $(document).ready( function(){
 	$("#selectCourseForm").on("click", "#selectCourse", function(){
 		// When the course selct button is clicked, stop the form from posting, and call a funtion to get assingments
 		event.preventDefault();
+		$("#infoDiv").html("");
 		var course = $("#selectCourseSelect").val();
 		// Use the course ID to get information about the course
 		getCourseInfo(course);
@@ -388,8 +386,29 @@ $(document).ready( function(){
 		//var subHeaderString = "<h2>"+courseInfo.name+"</h2>";
 		$("#subheader").html()
 		displayMenu(course);
-		//getAssignments(course);
+		// Display current grade
+		var course = $("#selectCourseSelect").val();
+		var grade = getGrades(course);
+		console.log(grade);
 	});
+	// AUTO UPDATE SELECT COURSE
+	$("#selectCourseSelect").change( function() {
+		// When the course selct button is clicked, stop the form from posting, and call a funtion to get assingments
+		event.preventDefault();
+		$("#infoDiv").html("");
+		$("#gradeDiv").html("");
+		var course = $("#selectCourseSelect").val();
+		// Use the course ID to get information about the course
+		getCourseInfo(course);
+		// Display a subheader for the course
+		//var subHeaderString = "<h2>"+courseInfo.name+"</h2>";
+		$("#subheader").html()
+		displayMenu(course);
+		// Display current grade
+		var course = $("#selectCourseSelect").val();
+		var grade = getGrades(course);
+		console.log(grade);
+	})
 	// MODULES
 	$("nav").on("click", "#moduleButton", function(){
 		var course = $("#selectCourseSelect").val();
@@ -425,10 +444,4 @@ $(document).ready( function(){
 		var course = $("#selectCourseSelect").val();
 		getDiscussions(course);
 	});
-	// Special button to display discussion topics from a class I'm nolonger enrolled in
-	// Only for demonstration
-	// $("nav").on("click", "#discussionButton145", function(){
-	// 	var course = $("#discussionButton145").val();
-	// 	getDiscussions(course);
-	// });
 });

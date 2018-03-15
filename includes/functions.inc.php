@@ -66,7 +66,9 @@ function displayCourseSelect() {
 	// This will aloow me to view a course that I'm nolonger enrolled in
 	// The reason for this is to display discussion data
 	$selectString .= "<option value=\"1510728\">CTEC 145 F17 2514 - WEB SERVER TECHNOLOGY</option>";
-	$selectString .= "</select><button id="."selectCourse".">Select Course</button></form>";
+	$selectString .= "</select>";
+	$selectString .= "<button id="."selectCourse".">Select Course</button>";
+	$selectString .= "</form>";
 	echo $selectString;
 }
 
