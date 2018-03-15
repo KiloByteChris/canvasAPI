@@ -1,101 +1,83 @@
 /*
-	CSS for mycanvas.php
-	#78A2AD
-	#80B4A2
-	#DFE3E5
-	#CDC4A7
-		lighter: #CDC9C2;
-	#EADCA7
+	CSS for the login page "index.php" for the canvas api project
 */
-
+/*-----------------------------------------------
+------------------- MAIN CSS --------------------
+-----------------------------------------------*/
 body {
 	background-color: #DFE3E5;
-	/*background-color: #000;*/
 }
 
 #wrapper {
-	width: 1200px;
-	font-family: ariel, sans-serif;
-	margin: 0 auto;
+	max-width: 399px;
+	width: 100%;
+	font-family: 'Arimo', tahoma, sans-serif;
 }
 
 header {
-	height: 200px;
+	/*height: 200px;*/
 	background-color: #CDC9C2;
 	border-radius: 5px;
 	border: 2px solid #636363;
 }
 
 h1 {
-	font-size: 2.3em;
-	padding-left: 40px;
-	font-weight: 100;
-	color: #000;
-	border-bottom: 1px solid #999;
-}
-
-#avatar {
-	margin-left: 40px;
-	border-radius: 50px;
-	float: left;
+	font-size: 2em;
+	padding: 10px;
+	text-align: center;
+	font-weight: 200;
 }
 
 h2 {
-	float: left;
-	margin-left: 20px;
-	margin-top: 10px;
-	font-weight: 300;
-	font-size: 1.8em;
-	color: #FFF;
+	font-size: 1.2em;
+	padding-bottom: 10px;
+	text-align: center;
 }
 
-#subHeader h2 {
-	color: #000;
-}
-
-#homeLink {
-	font-size: 2em;
-	text-decoration: none;
-	color: #FFF;
-	float: right;
-	margin-right: 20px;
-	margin-top: -65px;
-}
-
-#homeLink:hover{
-	color: #DDD;
-}
-
-#selectCourseForm {
-	clear: both;
-	padding-left: 40px;
-}
-
-#selectCourse {
-	margin-left: 20px;
-}
-
-#infoDiv {
-	font-size: 1.5em;
-	line-height: 1.5em;
-}
-#infoDiv li {
-	margin-left: 10px;
-}
-
-footer {
-	height: 150px;
-	background-color: #78A2AD;
-	clear: both;
-}
-
-footer p{
+h3 {
+	font-size: 1.2;
+	text-align: center;
 	padding-top: 10px;
-	margin-left: 20px;
-	font-weight: 200;
-	font-size: 1.1em;
-	/*line-height: 1.2em;*/
-	color: #FFF;
+	font-weight: 600;
+}
+
+form {
+	width: ;
+	border: 1px solid #000;
+	border-radius: 5px;
+	margin: 10px auto;
+	box-shadow: 3px 3px #aaa;
+	background-color: #D8DDE5;
+}
+
+input {
+	display: block;
+	margin: 0 auto;
+}
+
+label {
+	text-align: center;
+	display: block;
+	margin: 10px auto 3px;
+	font-size: .9em;
+}
+
+.formSubmit {
+	margin: 5px auto 5px;
+	padding: 10px;
+	box-shadow: 1px 1px #aaa;
+	background-color: #eee;
+	border: 1px solid #ddd;
+	font-weight: 600;
+}
+
+.formSubmit:hover {
+	border: 1px solid #555;
+}
+
+.formSubmit:active {
+	background-color: #fff;
+	border: 1px solid #000;
 }
 
 /*-------------------------------------------------------------------------------

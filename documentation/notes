@@ -1,6 +1,5 @@
 REQUIRMENTS:
 ---- FINAL SUBMIT -------
-- Ontime
 - html and css validates
 - The project was delivered on time
 - The code was sufficiently commented
@@ -10,20 +9,21 @@ REQUIRMENTS:
 - Dashboard page is responsive
 - Presentation was professional and effectively demonstrated the students dashboard
 
---- DEVLOPMENT -----
+--- DEVELOPMENT -----
 -X Dashboard page displays overall grade for each course
 -X Dashboard page provides a way to display upcoming assignments for any given course
 -X Dashboard page provides a way to display past assignments and grade received on assignment for any given course
 	
-- Dashboard page provides a way to display upcoming quizzes for any given course
-- Dashboard page provides a way to display past quizzes and grade received for any given course
+-! Dashboard page provides a way to display upcoming quizzes for any given course
+-! Dashboard page provides a way to display past quizzes and grade received for any given course
+	note - I'm not enrolled in a class that has quizzes, therfore the quizzes api doesn't return an information for me to work with
 
 -X Dashboard page provides a way to display upcoming discussion topics for any given course
-- Dashboard page provides a way to display past discussion topics and grades received for any given course
+-X Dashboard page provides a way to display past discussion topics and grades received for any given course
 	note - Mot able to get grades because the only class that I have discussion topics for I'm nolonger enrolled in
 
-- The dashboard pages uses MySQL to store and retrieves data for the dashboard
-- The dashboard works with another students Canvas API key (the instructor will supply students with a test API key that they can use for this)
+-X The dashboard pages uses MySQL to store and retrieves data for the dashboard
+-X The dashboard works with another students Canvas API key (the instructor will supply students with a test API key that they can use for this)
 
 - Project utilizes PHP sessions
 -x Project does not expose API Key via JavaScript
@@ -33,16 +33,4 @@ REQUIRMENTS:
 
 
 3/12/18 notes
-- !!!! Why does the courses thing return old courses? !!!!
-- Modules only goes to the module, how to I display info for indavidule modules? I already set up an api but then went to assignments.
-- Get rid of the grades button and just display the current grade with the heading
-- Try to finish development today and switch to style on wednesday
-- Make the paghe auto update when the select box is selected? Instead of using the button?
 - change the date display for the assignments
-- Create a homepage with an recent updates. Is there an updates api? announcments api. Use that
-
-https://clarkcollege.instructure.com/api/v1/users/4337133/enrollments.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR
-users/:user_id/enrollments
-/api/v1/courses/:id
-https://clarkcollege.instructure.com/api/v1/courses/1371874.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR
-users/:user_id/enrollments

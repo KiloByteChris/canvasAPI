@@ -13,6 +13,10 @@
 <head>
 	<title>Canvas API</title>
 	<meta charset="utf-8">
+	<meta name="description" content="A website that uses the canvas api and my student access token to display canvas information" >
+    <meta name="keywords" content="Clark, Canvas, API" >
+    <meta name="author" content="Chris McGuire">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!--CSS -->
 	<link href="css/reset.css" rel="stylesheet">
 	<link href="css/main.css" rel="stylesheet">
