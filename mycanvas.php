@@ -20,6 +20,8 @@
 	<!--CSS -->
 	<link href="css/reset.css" rel="stylesheet">
 	<link href="css/main.css" rel="stylesheet">
+	<!-- GOOGLE FONTS -->
+	<link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">
 	<!-- JQUERY -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<!-- JQUERY UI -->
@@ -34,25 +36,24 @@
 <body>
 	<div id="wrapper">
 		<header>
-			<h1>Canvas API</h1>
-			<?php
+			<h1><a href="">Canvas API</a></h1>
+			<div id="headerBox">
+				<?php
 				require "includes/functions.inc.php";
 				// Functions from he include file that display data from the Canavs API
-				getAvatar();
-				getSelf();
-				mainMenu();
-				displayCourseSelect();
-			?>
+				
+					getAvatar();
+					getSelf();
+					// mainMenu();
+					displayCourseSelect();
+				?>	
+				</div>
+				<div id="subHeader"></div>
+				<div id="gradeDiv"></div>
+				<nav></nav>
+				
 		</header>
-		<div id="subHeader">
-
-		</div>
-		<div id="gradeDiv">
-		</div>
-		<nav>
-		</nav>
 		<main>
-
 			<div id="infoDiv">
 			</div>
 		</main>

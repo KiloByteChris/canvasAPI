@@ -27,11 +27,11 @@ function getAvatar() {
 	echo $avatarString;
 }
 
-function mainMenu() {
-	// Build a header string that links to the homepage
-	$menuString = "<a href="."mycanvas.php"." id ="."homeLink".">Home</a>";
-	echo $menuString;
-}
+// function mainMenu() {
+// 	// Build a header string that links to the homepage
+// 	$menuString = "<a href="."mycanvas.php"." id ="."homeLink".">Home</a>";
+// 	echo $menuString;
+// }
 
 function getCourse($course) {
 	// Get data about a course based on the courses id number

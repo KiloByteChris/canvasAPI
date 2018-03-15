@@ -5,84 +5,137 @@
 	#DFE3E5
 	#CDC4A7
 		lighter: #CDC9C2;
+		even lighter : #ECBCF0;
 	#EADCA7
 */
-
+/*-----------------------------------------------
+------------------- MAIN CSS --------------------
+-----------------------------------------------*/
 body {
 	background-color: #DFE3E5;
-	/*background-color: #000;*/
 }
 
 #wrapper {
-	width: 1200px;
-	font-family: ariel, sans-serif;
+	max-width: 399px;
+	width: 100%;
+	font-family: 'Arimo', tahoma, sans-serif;
 	margin: 0 auto;
 }
 
 header {
-	height: 200px;
-	background-color: #CDC9C2;
+	background-color: #ECBCF0;
 	border-radius: 5px;
 	border: 2px solid #636363;
 }
 
-h1 {
-	font-size: 2.3em;
-	padding-left: 40px;
-	font-weight: 100;
+header a {
+	text-decoration: none;
+}
+header a:active {
 	color: #000;
-	border-bottom: 1px solid #999;
 }
 
-#avatar {
-	margin-left: 40px;
-	border-radius: 50px;
-	float: left;
+#headerBox {
+	background-color: #FFF;
+	width: 90%;
+	margin: 0 auto 10px;
+	border-radius: 5px;
+	border: 1px solid #000;
+}
+
+h1 {
+	font-size: 2.5em;
+	text-align: center;
+	font-weight: 100;
+	color: #111;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-shadow: 2px 2px #fff;
 }
 
 h2 {
-	float: left;
+	text-align: center;
 	margin-left: 20px;
 	margin-top: 10px;
 	font-weight: 300;
 	font-size: 1.8em;
-	color: #FFF;
+	color: #111;
+}
+
+#avatar {
+	display: block;
+	margin: 10px auto;
+	border-radius: 50px;
 }
 
 #subHeader h2 {
 	color: #000;
 }
 
-#homeLink {
-	font-size: 2em;
-	text-decoration: none;
-	color: #FFF;
-	float: right;
-	margin-right: 20px;
-	margin-top: -65px;
+.navButton {
+	display: block;
+	margin: 0 auto 5px;
+	width: 100px;
+	padding: 5px;
+	border: 1px solid #aaa;
 }
 
-#homeLink:hover{
-	color: #DDD;
+.navButton:hover {
+	border: 1px solid #555;
+}
+
+.navButton:active {
+	background-color: #fff;
+	border: 1px solid #000;
+}
+
+#gradeDiv {
+	text-align: center;
 }
 
 #selectCourseForm {
 	clear: both;
-	padding-left: 40px;
+}
+
+#selectCourseSelect {
+	display: block;
+	margin: 10px auto;
+	padding: 10px;
+}
+
+option {
+	padding: 10px;
 }
 
 #selectCourse {
-	margin-left: 20px;
+	display: block;
+	margin: 5px auto 5px;
+	padding: 10px;
+	box-shadow: 1px 1px #aaa;
+	background-color: #eee;
+	border: 1px solid #ddd;
+	font-weight: 600;
+}
+
+#selectCourse:hover {
+	border: 1px solid #555;
+}
+
+#selectCourse:active {
+	background-color: #fff;
+	border: 1px solid #000;
 }
 
 #infoDiv {
 	font-size: 1.5em;
 	line-height: 1.5em;
 }
+
 #infoDiv li {
 	margin-left: 10px;
 }
 
+/*--------------- FOOTER ------------------*/
 footer {
 	height: 150px;
 	background-color: #78A2AD;
