@@ -1,3 +1,37 @@
+REQUIRMENTS:
+---- FINAL SUBMIT -------
+- Ontime
+- html and css validates
+- The project was delivered on time
+- The code was sufficiently commented
+
+---- DESIGN -----
+- Professionally Designed Site
+- Dashboard page is responsive
+- Presentation was professional and effectively demonstrated the students dashboard
+
+--- DEVLOPMENT -----
+-X Dashboard page displays overall grade for each course
+-X Dashboard page provides a way to display upcoming assignments for any given course
+- Dashboard page provides a way to display past assignments and grade received on assignment for any given course
+	(Grade recieved?)
+
+- Dashboard page provides a way to display upcoming quizzes for any given course
+- Dashboard page provides a way to display past quizzes and grade received for any given course
+- Dashboard page provides a way to display upcoming discussion topics for any given course
+- Dashboard page provides a way to display past discussion topics and grades received for any given course
+- The dashboard pages uses MySQL to store and retrieves data for the dashboard
+- The dashboard works with another students Canvas API key (the instructor will supply students with a test API key that they can use for this)
+- Project utilizes PHP sessions
+-X Project does not expose API Key via JavaScript
+-X Project has no complete page refreshes (AJAX and jQuery used)
+-X The project makes all API calls to the Canvas LMS via PHP
+- Links to Canvas items work (assignments, quizzes etc.)
+
+
+
+
+
 current grade 
 upcoming assignments
 	past assignment 
@@ -17,8 +51,10 @@ Nav:
 		courses
 
 3/12/18 notes
--Why does the courses thing return old courses? 
--Modules only goes to the module, how to I display info for indavidule modules? I already set up an api but then went to assignments.
--Get rid of the grades button and just display the current grade with the heading
+- Why does the courses thing return old courses? 
+- Modules only goes to the module, how to I display info for indavidule modules? I already set up an api but then went to assignments.
+- Get rid of the grades button and just display the current grade with the heading
 - Try to finish development today and switch to style on wednesday
 - Make the paghe auto update when the select box is selected? Instead of using the button?
+- change the date display for the assignments
+- Create a homepage with an recent updates. Is there an updates api? announcments api. Use that

@@ -134,8 +134,9 @@ $(document).ready( function(){
 							}
 							tablesString += "<tr>";
 							dueDate = moment(dueDate).format('MMMM Do YYYY, h:mm:ss a');
-							tablesString += "<td><a href="+data[i].html_url+">"+data[i].name+"</a></td><td>"+pointsPossible+"</td><td>"+dueDate+"</td>";
+							tablesString += "<td><a href="+data[i].html_url+">"+data[i].name+"</a></td><td id="+data[i].id+"Grade"+"></td><td>"+dueDate+"</td>";
 							tablesString += "</tr>";
+							getAssignmentGrade(data[i].course_id, data[i].id);
 						}
 					}
 				tablesString += "</table>";
@@ -148,7 +149,7 @@ $(document).ready( function(){
 	function getAssignments(course) {
 		// Get all assignments for the selected Canvas course
 		var url = "includes/functions.inc.php?action=getAssignments";
-		data = {"course": course};
+		var data = {"course": course};
 		$.ajax({
 			url: url,
 			data: data,
@@ -160,8 +161,31 @@ $(document).ready( function(){
 				// Display the assingments
 				console.log(data);
 				displayAssignmentsTable(data);
-				
 			});
+	}
+
+	function getAssignmentGrade(course, assignment) {
+		// Get the grade for an assignment
+		// This function is called within the getAssignments funtion
+		var url = "includes/functions.inc.php?action=getAssignmentGrade";
+		var data = {
+			"course" : course,
+			"assignment" : assignment
+		}
+		$.ajax({
+			url: url,
+			data: data,
+			method: "GET",
+			datatype: "json"
+		}).done( function(data) {
+			data = JSON.parse(data);
+			console.log(data);
+			var assignmentID = data.assignment_id;
+			var cellID = "#"+assignmentID+"Grade";
+			console.log(data.score);
+			console.log(cellID);
+			$(cellID).text(data.score);
+		})
 	}
 
 	/*------------------------------------------------------------

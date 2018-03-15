@@ -132,6 +132,14 @@ function getDiscussionsAPI($data) {
 	echo $data;
 }
 
+function getAssignmentGrade($data) {
+	$course = $data->course;
+	$id = $data->assignment;
+	$gradeURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course."/assignments/".$id."/submissions/4337133.json?access_token=9~OL3UKDFI4rCDcOWYqKGGD2nKqx1KbcjthA2xf0NZnBdwITg05cAzOTxaEMTs11nR";
+	$data = callAPI($gradeURL);
+	echo $data;
+}
+
 // Code to fire specific php function from ajax request
 if(isset($_GET["action"])){
 	$data = json_encode($_GET);
