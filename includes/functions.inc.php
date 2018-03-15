@@ -71,7 +71,7 @@ function displayCourseSelect() {
 	// Add another option to the select 
 	// This will aloow me to view a course that I'm nolonger enrolled in
 	// The reason for this is to display discussion data
-	$selectString .= "<option value=\"1510728\">CTEC 145 F17 2514 - WEB SERVER TECHNOLOGY</option>";
+	$selectString .= "<option value=\"1510728\">CTEC 145 - WEB SERVER TECHNOLOGY</option>";
 	$selectString .= "</select>";
 	$selectString .= "<button id="."selectCourse".">Select Course</button>";
 	$selectString .= "</form>";

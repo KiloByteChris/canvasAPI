@@ -20,8 +20,10 @@ body {
 	width: 100%;
 	font-family: 'Arimo', tahoma, sans-serif;
 	margin: 0 auto;
+	background-color: #ECEEF0;
 }
 
+/* ------------- HEADER -------------------*/
 header {
 	background-color: #ECBCF0;
 	border-radius: 5px;
@@ -68,8 +70,11 @@ h2 {
 	border-radius: 50px;
 }
 
+/* ------------- SUBHEADER ---------------*/
 #subHeader h2 {
 	color: #000;
+	font-size: 1.2em;
+	font-weight: 600;
 }
 
 .navButton {
@@ -91,8 +96,10 @@ h2 {
 
 #gradeDiv {
 	text-align: center;
+	margin: 10px 0 10px 0;
 }
 
+/*---------------- SELECT COURSE ---------------*/
 #selectCourseForm {
 	clear: both;
 }
@@ -126,6 +133,7 @@ option {
 	border: 1px solid #000;
 }
 
+/*-------------------- INFODIV ------------------*/
 #infoDiv {
 	font-size: 1.5em;
 	line-height: 1.5em;
@@ -133,6 +141,70 @@ option {
 
 #infoDiv li {
 	margin-left: 10px;
+}
+
+.infoHeader {
+	text-align: left;
+	margin-bottom: 10px;
+}
+
+.ui-accordion .ui-accordion-header {
+	background-color: #80B4A2;
+	color: #111;
+	font-size: 1.5em;
+	text-align: left;
+}
+/*---------------- MODULES ------------------*/
+.moduleItemLink {
+	text-decoration: none;
+	padding: 20px;
+}
+
+.moduleLink {
+	text-decoration: none;
+	display: block;
+	background-color: #F2FDF0;
+	border-bottom: 1px solid #000;
+}
+
+.moduleLink:first-child {
+	border-top: 1px solid #000;
+}
+
+.moduleLink:nth-child(even) {background-color: #F6F0F7;}
+
+.moduleLink:hover {
+	background-color: #C4FCEE;
+}
+
+/*---------------- ASSIGNMENTS -----------------*/
+tr {
+	
+	text-decoration: none;
+	background-color: #F2FDF0;
+}
+
+tr:nth-child(even) {
+	background-color: #F6F0F7;
+}
+
+tr:hover {
+	background-color: #C4FCEE;
+}
+
+th {
+	min-width: 150px;
+}
+
+td {
+	min-width: 150px;
+	padding: 20px;
+}
+
+.noDataP {
+	font-size: .9em;
+	color: #aaa;
+	font-style: italic;
 }
 
 /*--------------- FOOTER ------------------*/
@@ -169,6 +241,8 @@ footer p{
     max-width: 960px;
     width: 100%; 
     }
+
+
 }
 
 /*-----------------------------------------------------------------------
@@ -189,5 +263,82 @@ footer p{
         max-width: 1280px;
         width: 100%; 
         margin: 0 auto;
+    }
+
+    #avatar {
+    	display: inline;
+    	float: left;
+    	margin-left: 20px;
+    }
+
+    header h2 {
+    	margin-top: 20px;
+    	float: left;
+    }
+
+    #selectCourseForm {
+    	position: relative;
+    	top: 5px;
+    	float: right;
+    	display: inline;
+    	clear: none;
+    	margin-right: 20px;
+    }
+
+    #selectCourseSelect {
+    	float: left;
+    	display: inline;
+    	clear: none;
+    }
+
+    #selectCourse {
+    	position: relative;
+    	float: right;
+    	display: inline;
+    	clear: none;
+    	top: 5px;
+    	margin-left: 10px;
+    }
+
+    #beefDiv {
+    	display: block;
+    	clear: both;
+    	height: 1px;
+    	width: 100%;
+    }
+
+    #headerBox {
+    	clear: both;
+    }
+
+    #navList {
+    	position: relative;
+    	top: -25px;
+    	display: block;
+    	text-align: center;
+    	clear: both;
+
+    }
+
+    #navList li {
+    	display: inline-block;
+    	margin: 0 10px 0 10px;
+    }
+
+    #subHeader h2 {
+    	position: relative;
+    	top: -10px;
+    	margin-left: 70px;
+    	display: inline;
+    	float: left;
+    }
+
+    #gradeDiv {
+    	position: relative;
+    	top: 20px;
+    	left: -242px;
+    	float: left;
+    	line-height: 1.2em;
+    	margin-left: 10px;
     }
 }   

@@ -20,7 +20,7 @@ $(document).ready( function(){
 		// Clean the nav area
 		//$("nav").html(menuString);
 		// Build the string
-		menuString += "<ul>";
+		menuString += "<ul id=\"navList\" >";
 		//menuString += "<li><button class=\"navButton\" id=\"gradeButton\" value="+course+">Grades</button></li>";
 		menuString += "<li><button class=\"navButton\" id=\"moduleButton\" value="+course+">Modules</button></li>";
 		menuString += "<li><button class=\"navButton\" id=\"assignmentButton\" value="+course+">Assignments</button></li>";
@@ -42,7 +42,7 @@ $(document).ready( function(){
 			datatype: "json"
 		}).done( function(data){
 			data = JSON.parse(data);
-			console.log(data);
+			//console.log(data);
 			for (var i = 0 ; i < data.length; i++) {
 				// Select to correct course from the enrollment object
 				if(data[i].course_id == course){
@@ -69,17 +69,22 @@ $(document).ready( function(){
 		// There are tables for past, undated, and future assignments.
 		$("#infoDiv").html("");
 		//Create a string that creates tables for past, undated, and future assignments
-		var tablesString = "<div id=\"accordion\">";
+
+		var tablesString = "<h2 class=\"infoHeader\">Assignments</h2>";
+		tablesString += "<div id=\"accordion\">";
 			tablesString += "<h4>Future Assignments</h4>";
 				tablesString += "<div id=\"futureAssignments\">";
 				tablesString += "<table id=\"futureAssignmentsTable\">";
-					tablesString += "<tr><th>Assignment</th><th>Possible Points</th><th>Due Date</th></tr>";
+					tablesString += "<tr id=\"futureAssignmentsHeader\" ><th>Assignment</th><th>Possible Points</th><th>Due Date</th></tr>";
+					var j = 0;
 					// check if the assignment is still in the future
 					for(var i=0;i<data.length;i++){
 						var dueDate = data[i].due_at;
 						var now = new Date();
 						var d1 = Date.parse(dueDate);
 						if(now<d1){
+							// add to j to count the results
+							j++;
 							// check to see if points possible is NULL, if so, assign 0
 							if(data[i].points_possible == null ) {
 								var pointsPossible = "-";
@@ -93,15 +98,21 @@ $(document).ready( function(){
 						}
 					}
 				tablesString += "</table>";
+				// if there are no results, tell the user there are no results
+				if(j==0){
+					tablesString += "<p class=\"noDataP\">There are no upcoming assingments</p>";
+				}
 				tablesString += "</div>";
 			tablesString += "<h4>Undated Assignments</h4>";
 				tablesString += "<div id=\"undatedAssignments\">";
 				tablesString += "<table id=\"undatedAssignmentsTable\">";
-					tablesString += "<tr><th>Assignment</th><th>Possible Points</th><th>Score</th></tr>";
+					tablesString += "<tr id=\"undatedAssignmentsHeader\" ><th>Assignment</th><th>Possible Points</th><th>Score</th></tr>";
+					var k = 0;
 					// check if the assignment is undated
 					for(var i=0;i<data.length;i++){
 						var dueDate = data[i].due_at;
 						if(dueDate == null){
+							k++;
 							// check to see if points possible is NULL, if so, assign 0
 							if(data[i].points_possible == null ) {
 								var pointsPossible = "-";
@@ -116,17 +127,22 @@ $(document).ready( function(){
 						}
 					}
 				tablesString += "</table>";
+				if(k==0){
+					tablesString += "<p class=\"noDataP\">There are no undated assingments</p>";
+				}
 				tablesString += "</div>";
 			tablesString += "<h4>Past Assignments</h4>";
 				tablesString += "<div id=\"pastAssignments\">";
 				tablesString += "<table id=\"pastAssignmentsTable\">";
-					tablesString += "<tr><th>Assignment</th><th>Possible Points</th><th>Score</th><th>Due Date</th></tr>";
+					var l = 0;
+					tablesString += "<tr id=\"pastAssignmentsHeader\" ><th>Assignment</th><th>Possible Points</th><th>Score</th><th>Due Date</th></tr>";
 					// check if the assignment is still in the future
 					for(var i=0;i<data.length;i++){
 						var dueDate = data[i].due_at;
 						var now = new Date();
 						var d1 = Date.parse(dueDate);
 						if(now>d1){
+							l++;
 							// check to see if points possible is NULL, if so, assign "-"
 							if(data[i].points_possible == null ) {
 								var pointsPossible = "-";
@@ -141,10 +157,26 @@ $(document).ready( function(){
 						}
 					}
 				tablesString += "</table>";
+				if(l==0){
+					tablesString += "<p class=\"noDataP\">There are no past assingments</p>";
+				}
 				tablesString += "</div>";
 		tablesString += "</div>"; // end accordion
 		$("#infoDiv").html(tablesString);
-		$("#accordion").accordion();	
+		$("#accordion").accordion({
+			heightStyle: "content",
+			collapsible: true
+		});
+		// Check to see if there are any empty tables. If so, hide the table headers	
+		if(j==0) {
+			$("#futureAssignmentsHeader").hide();
+		}
+		if(k==0) {
+			$("#undatedAssignmentsHeader").hide();
+		}
+		if(l==0) {
+			$("#pastAssignmentsHeader").hide();
+		}
 	}
 
 	function getAssignments(course) {
@@ -198,6 +230,8 @@ $(document).ready( function(){
 		var data = {"course": course};
 		//Empty the info DIV
 		$("#infoDiv").html("");
+		$("#infoDiv").append("<h2 class=\"infoHeader\">Modules</h2");
+
 		// Create the accordion div
 		$("#infoDiv").append("<div id=\"accordion\"></div>");
 		$.ajax({
@@ -225,12 +259,11 @@ $(document).ready( function(){
 						datatype: "json" 
 					}).done( function(moduleData){
 						moduleData = JSON.parse(moduleData);
-
 						// Iterate through each item in the module
 						for(var i=0;i<moduleData.length;i++) {
 							// Create a header that links to more infomation about the module item
 							// Attach the ID so it can be used to retrieve the item content
-							var moduleItemString = "<a href="+moduleData[i].html_url+" ><h4 class=\"moduleItemLink\" id="+moduleData[i].id+" value="+moduleData[i].module_id+">"+moduleData[i].title+"</h4></a>";
+							var moduleItemString = "<a href="+moduleData[i].html_url+" class=\"moduleLink\" ><h4 class=\"moduleItemLink\" id="+moduleData[i].id+" value="+moduleData[i].module_id+">"+moduleData[i].title+"</h4></a>";
 							// Select the moduleDiv by id. Then display the module item
 							$("#"+moduleData[i].module_id).append(moduleItemString);
 						}
@@ -238,7 +271,8 @@ $(document).ready( function(){
 				}
 				// Use JQUERY UI to create an accordion from the modules
 				$("#accordion").accordion({
-					heightStyle: "content"
+					heightStyle: "content",
+					collapsible: true
 				});
 		});
 	}
@@ -290,84 +324,83 @@ $(document).ready( function(){
 			datatype: "json"
 		}).done( function(data){
 			data = JSON.parse(data);
-			console.log(data);
 			//Clear the page
 			$("#infoDiv").html("");
-			// Check to see if the discussions request returned any data
-			if(data.length > 0){
-				// If there is data, build a string to display the discussion data
-				var discussionString = "<div id=\"accordion\">";
-					// Begin Upcoming discussions
-						discussionString += "<h3>Upcoming Discussions</h3>";
-						discussionString += "<div id=\"openDiscussionsDiv\">";
-						discussionString += "<table id=\"upcomingDiscussionsTable\">";
-						discussionString += "<tr><th>Discussions</th><th>Points</th><th>Due Date</th>";
-						// Iterate through the discussion data
-						for(var i = 0; i < data.length; i++){
-							console.log(data[i]);
-							// Check to see if the due date for the discussion has expired
-							var dueDate = data[i].assignment.due_at;
-							var now = new Date();
-							var d1 = Date.parse(dueDate);
-							// Count to see if there are any upcoming discussions
-							var j = 0;
-							if(now<d1){
-								j++
-								discussionString += "<tr>";
-								discussionString += "<td><a href="+data[i].html_url+"><h4>"+data[i].title+"</h4></a></td>";
-								discussionString += "<td>"+data[i].assignment["points_possible"]+"</td>";
-								discussionString += "<td>"+d1+"</td>";
-								discussionString += "</tr>";
-							}
-						}
-						// Check to see if there are any discussions, display a message if not
-						if(j==0){
-								discussionString += "<h4>No Upcoming Discusions</h4>";
-						}
-					discussionString +="</table>";
-					discussionString +="</div>";// End of open discussions div
-					// Begin past Discussions
-					discussionString += "<h3>Past Discussions</h3>";
-						discussionString += "<div id=\"pastDiscussionsDiv\">";
-						discussionString += "<table id=\"upcomingDiscussionsTable\">";
-						discussionString += "<tr><th>Discussions</th><th>Points</th><th>Due Date</th>";
-						// Iterate through the discussion data
-						for(var i = 0; i < data.length; i++){
-							console.log(data[i]);
-							//Check to see if the due date for the discussion has expired
-							var dueDate = data[i].assignment.due_at;
-							var now = new Date();
-							var d1 = Date.parse(dueDate);
-							var j = 0;
-							if(now>d1){
-								j++;
-								discussionString += "<tr>";
-								discussionString += "<td><a href="+data[i].html_url+"><h4>"+data[i].title+"</h4></a></td>";
-								discussionString += "<td>"+data[i].assignment["points_possible"]+"</td>";
-								discussionString += "<td>"+d1+"</td>";
-								discussionString += "</tr>";
-							}
-						}
-						// Check to see if there are any discussions, display a message if not
-						if(j==0){
-								discussionString += "<h4>No Past Discussions</h4>";
-						}
-					discussionString += "</table>";
-					discussionString += "</div>";//End of past discussions div
-				discussionString += "</div>";//End accordion div
-				$("#infoDiv").html(discussionString);
-				
-			}else if(data.length == 0){
-				// If the API request for discussion data didn't return any data, tell the user that there is no discussion data 
-				// Build a string to display the messege
-				var discussionString = "<h4>There are no discussions for this course</h4>";
-				$("#infoDiv").html(discussionString);
-
+			// If there is data, build a string to display the discussion data
+			var discussionString = "<h2 class=\"infoHeader\">Discussions</h2>";
+			discussionString += "<div id=\"accordion\">";
+			// Begin Upcoming discussions
+			discussionString += "<h3>Upcoming Discussions</h3>";
+			discussionString += "<div id=\"openDiscussionsDiv\">";
+			discussionString += "<table id=\"upcomingDiscussionsTable\">";
+			discussionString += "<tr id=\"upcomingDiscussionsHeader\" ><th>Discussions</th><th>Points</th><th>Due Date</th>";
+			// Iterate through the discussion data
+			var j = 0;
+			for(var i = 0; i < data.length; i++){
+				// Count how many discussion topics there are
+				console.log(data[i]);
+				// Check to see if the due date for the discussion has expired
+				var dueDate = data[i].assignment.due_at;
+				var now = new Date();
+				var d1 = Date.parse(dueDate);
+				if(now<d1){
+					// Count to see if there are any upcoming discussions
+					j++
+					discussionString += "<tr>";
+					discussionString += "<td><a href="+data[i].html_url+"><h4>"+data[i].title+"</h4></a></td>";
+					discussionString += "<td>"+data[i].assignment["points_possible"]+"</td>";
+					discussionString += "<td>"+d1+"</td>";
+					discussionString += "</tr>";
+				}
 			}
-			// JQUERY UI accordion
-			$("#accordion").accordion({
-					heightStyle: "content"
-			});	
+			// Check to see if there are any discussions, display a message if not
+			if(j==0){
+					discussionString += "<p class=\"noDataP\">No Upcoming Discussions</p>";
+			}
+			discussionString +="</table>";
+			discussionString +="</div>";// End of open discussions div
+			// Begin past Discussions
+			discussionString += "<h3>Past Discussions</h3>";
+				discussionString += "<div id=\"pastDiscussionsDiv\">";
+				discussionString += "<table id=\"upcomingDiscussionsTable\">";
+				discussionString += "<tr id=\"pastDiscussionsHeader\" ><th>Discussions</th><th>Points</th><th>Due Date</th>";
+				// Iterate through the discussion data
+				var k = 0;
+				for(var i = 0; i < data.length; i++){
+					console.log(data[i]);
+					//Check to see if the due date for the discussion has expired
+					var dueDate = data[i].assignment.due_at;
+					var now = new Date();
+					var d1 = Date.parse(dueDate);
+					if(now>d1){
+						k++;
+						discussionString += "<tr>";
+						discussionString += "<td><a href="+data[i].html_url+"><h4>"+data[i].title+"</h4></a></td>";
+						discussionString += "<td>"+data[i].assignment["points_possible"]+"</td>";
+						discussionString += "<td>"+d1+"</td>";
+						discussionString += "</tr>";
+					}
+				}
+				// Check to see if there are any discussions, display a message if not
+				if(k==0){
+						discussionString += "<p class=\"noDataP\">No Past Discussions</p>";
+				}
+			discussionString += "</table>";
+			discussionString += "</div>";//End of past discussions div
+		discussionString += "</div>";//End accordion div
+		$("#infoDiv").html(discussionString);
+		// JQUERY UI accordion
+		$("#accordion").accordion({
+				heightStyle: "content",
+				collapsible: true
+		});	
+		// Check to see if there was any dat displayed. If not tell the use there is no data
+		if(j==0) {
+			$("#upcomingDiscussionsHeader").hide();
+		}
+		if(k==0) {
+			$("#pastDiscussionsHeader").hide();
+		}
 		});
 	}
 
@@ -389,7 +422,7 @@ $(document).ready( function(){
 		// Display current grade
 		var course = $("#selectCourseSelect").val();
 		var grade = getGrades(course);
-		console.log(grade);
+		//console.log(grade);
 	});
 	// AUTO UPDATE SELECT COURSE
 	$("#selectCourseSelect").change( function() {
@@ -416,7 +449,7 @@ $(document).ready( function(){
 	});
 	// MODULE ITEM
 	$("#infoDiv").on("click", ".moduleItemLink", function(){
-		event.preventDefault();
+		//event.preventDefault();
 		var course = $("#selectCourseSelect").val();
 		var itemID = $(this).prop("id");
 		var moduleID = $(this).attr("value");

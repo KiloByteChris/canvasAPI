@@ -47,10 +47,11 @@
 					// mainMenu();
 					displayCourseSelect();
 				?>	
-				</div>
-				<div id="subHeader"></div>
-				<div id="gradeDiv"></div>
-				<nav></nav>
+				<div id="beefDiv"></div>
+			</div>
+			<div id="subHeader"></div>
+			<div id="gradeDiv"></div>
+			<nav></nav>
 				
 		</header>
 		<main>
