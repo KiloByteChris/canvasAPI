@@ -1,5 +1,9 @@
 $(document).ready( function(){
+	/*--------------------------------------------------------------
+	--------------------- DASHBOARD SUBHEADER ----------------------
+	--------------------------------------------------------------*/
 	function getCourseInfo(course) {
+		// Function uses the courses api to display the title of the selected course
 		var url = "includes/functions.inc.php?action=getCourseInfoAPI"
 		var data = {"course": course};
 		$.ajax({
@@ -9,6 +13,7 @@ $(document).ready( function(){
 			method: "GET"
 		}).done( function(data) {
 			data = JSON.parse(data);
+			// Display the title
 			var subHeaderString = "<h2>"+data.name+"</h2>";
 			$("#subHeader").html(subHeaderString);	
 		});
@@ -17,11 +22,8 @@ $(document).ready( function(){
 	function displayMenu(course) {
 		// Build a nav menu to get information about the courses
 		var menuString = "";
-		// Clean the nav area
-		//$("nav").html(menuString);
 		// Build the string
 		menuString += "<ul id=\"navList\" >";
-		//menuString += "<li><button class=\"navButton\" id=\"gradeButton\" value="+course+">Grades</button></li>";
 		menuString += "<li><button class=\"navButton\" id=\"moduleButton\" value="+course+">Modules</button></li>";
 		menuString += "<li><button class=\"navButton\" id=\"assignmentButton\" value="+course+">Assignments</button></li>";
 		// menuString += "<li><button class=\"navButton\" id=\"quizButton\" value="+course+">Quizes</button></li>";
@@ -46,7 +48,7 @@ $(document).ready( function(){
 			for (var i = 0 ; i < data.length; i++) {
 				// Select to correct course from the enrollment object
 				if(data[i].course_id == course){
-					// Display the current score int he class
+					// Display the current score in the course
 					$("#gradeDiv").html("");
 					var gradeString = "<p id=\"grade\">Current Score: "+data[i].grades["current_score"]+"</p>";
 					$("#gradeDiv").html(gradeString);
@@ -69,7 +71,6 @@ $(document).ready( function(){
 		// There are tables for past, undated, and future assignments.
 		$("#infoDiv").html("");
 		//Create a string that creates tables for past, undated, and future assignments
-
 		var tablesString = "<h2 class=\"infoHeader\">Assignments</h2>";
 		tablesString += "<div id=\"accordion\">";
 			tablesString += "<h4>Future Assignments</h4>";
@@ -92,6 +93,7 @@ $(document).ready( function(){
 								var pointsPossible = data[i].points_possible;
 							}
 							tablesString += "<tr>";
+							// format the date to be easier to read
 							dueDate = moment(dueDate).format('MMMM Do YYYY, h:mm:ss a');
 							tablesString += "<td><a href="+data[i].html_url+">"+data[i].name+"</a></td><td>"+pointsPossible+"</td><td>"+dueDate+"</td>";
 							tablesString += "</tr>";
@@ -112,6 +114,7 @@ $(document).ready( function(){
 					for(var i=0;i<data.length;i++){
 						var dueDate = data[i].due_at;
 						if(dueDate == null){
+							// count how many assignments are undated
 							k++;
 							// check to see if points possible is NULL, if so, assign 0
 							if(data[i].points_possible == null ) {
@@ -120,13 +123,13 @@ $(document).ready( function(){
 								var pointsPossible = data[i].points_possible;
 							}
 							tablesString += "<tr>";
-							//dueDate = moment(dueDate).format('MMMM Do YYYY, h:mm:ss a');
 							tablesString += "<td><a href="+data[i].html_url+">"+data[i].name+"</a></td><td>"+pointsPossible+"</td><td id="+data[i].id+"Grade"+"></td>";
 							tablesString += "</tr>";
 							getAssignmentGrade(data[i].course_id, data[i].id);
 						}
 					}
 				tablesString += "</table>";
+				// If there are no undated assingments display a messege
 				if(k==0){
 					tablesString += "<p class=\"noDataP\">There are no undated assingments</p>";
 				}
@@ -142,6 +145,7 @@ $(document).ready( function(){
 						var now = new Date();
 						var d1 = Date.parse(dueDate);
 						if(now>d1){
+							// count how many past assingments there are
 							l++;
 							// check to see if points possible is NULL, if so, assign "-"
 							if(data[i].points_possible == null ) {
@@ -157,6 +161,7 @@ $(document).ready( function(){
 						}
 					}
 				tablesString += "</table>";
+				// if there are no past assingment display a messege
 				if(l==0){
 					tablesString += "<p class=\"noDataP\">There are no past assingments</p>";
 				}
@@ -192,7 +197,6 @@ $(document).ready( function(){
 				// Process the results of the ajax request
 				data = JSON.parse(data);
 				// Display the assingments
-				console.log(data);
 				displayAssignmentsTable(data);
 			});
 	}
@@ -212,11 +216,10 @@ $(document).ready( function(){
 			datatype: "json"
 		}).done( function(data) {
 			data = JSON.parse(data);
-			console.log(data);
+			// Match the assignment grade with the assignment in the table
+			// This is done through the id of the table cell
 			var assignmentID = data.assignment_id;
 			var cellID = "#"+assignmentID+"Grade";
-			console.log(data.score);
-			console.log(cellID);
 			$(cellID).text(data.score);
 		})
 	}
@@ -231,7 +234,6 @@ $(document).ready( function(){
 		//Empty the info DIV
 		$("#infoDiv").html("");
 		$("#infoDiv").append("<h2 class=\"infoHeader\">Modules</h2");
-
 		// Create the accordion div
 		$("#infoDiv").append("<div id=\"accordion\"></div>");
 		$.ajax({
@@ -279,6 +281,7 @@ $(document).ready( function(){
 
 	function getModuleItemContent(moduleID, itemID, course) {
 		// Get the contetnts on an single module item
+		// not currently in use
 		var url = "includes/functions.inc.php?action=getModuleItemContentAPI";
 		var data = {"moduleID": moduleID, "itemID": itemID, "course": course};
 		$.ajax({
@@ -288,7 +291,6 @@ $(document).ready( function(){
 			method: "GET"
 		}).done( function(moduleItemData) {
 			moduleItemData = JSON.parse(moduleItemData);
-			console.log(moduleItemData);
 		});
 	}
 
@@ -297,6 +299,7 @@ $(document).ready( function(){
 	------------------------------------------------------------*/
 	function getQuizzes(course) {
 		// Get the quizzes associated with a course
+		// Not currently in use, I don't have access to any quiz information
 		var url = "includes/functions.inc.php?action=getQuizzesAPI";
 		data = {"course": course};
 		$.ajax({
@@ -305,7 +308,6 @@ $(document).ready( function(){
 			method: "GET",
 			datatype: "json"
 			}).done( function(data) {
-				// I don't have access to any quiz information
 				data = JSON.parse(data);
 		});
 	}
@@ -337,8 +339,6 @@ $(document).ready( function(){
 			// Iterate through the discussion data
 			var j = 0;
 			for(var i = 0; i < data.length; i++){
-				// Count how many discussion topics there are
-				console.log(data[i]);
 				// Check to see if the due date for the discussion has expired
 				var dueDate = data[i].assignment.due_at;
 				var now = new Date();
@@ -424,7 +424,6 @@ $(document).ready( function(){
 		// Display current grade
 		var course = $("#selectCourseSelect").val();
 		var grade = getGrades(course);
-		//console.log(grade);
 	});
 	// AUTO UPDATE SELECT COURSE
 	$("#selectCourseSelect").change( function() {
@@ -442,7 +441,6 @@ $(document).ready( function(){
 		// Display current grade
 		var course = $("#selectCourseSelect").val();
 		var grade = getGrades(course);
-		console.log(grade);
 	})
 	// MODULES
 	$("nav").on("click", "#moduleButton", function(){
@@ -451,22 +449,14 @@ $(document).ready( function(){
 	});
 	// MODULE ITEM
 	$("#infoDiv").on("click", ".moduleItemLink", function(){
-		//event.preventDefault();
 		var course = $("#selectCourseSelect").val();
 		var itemID = $(this).prop("id");
 		var moduleID = $(this).attr("value");
 		getModuleItemContent(moduleID, itemID, course);	
 	});
-	// GRADES
-	$("nav").on("click", "#gradeButton", function(){
-		var course = $("#selectCourseSelect").val();
-		var grade = getGrades(course);
-		console.log(grade);
-	});
 	// ASSIGNMENTS
 	$("nav").on("click", "#assignmentButton", function(){
 		var course = $("#selectCourseSelect").val();
-		//displayMenu(course);
 		getAssignments(course);
 	});
 	// QUIZZES

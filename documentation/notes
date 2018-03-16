@@ -37,3 +37,8 @@ REQUIRMENTS:
 
 3/15/18
 - There are headers within the modules. How to i check to see it it's a link of a header? how do I change the display?
+
+3/16/18 - Final submission
+- Validate css and html
+- Move course title and grade in the desktop media query
+- Go through the code and remove all the console.log, and unused code
