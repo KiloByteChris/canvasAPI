@@ -305,8 +305,8 @@ $(document).ready( function(){
 			method: "GET",
 			datatype: "json"
 			}).done( function(data) {
-				//data = JSON.parse(data);
-				console.log(data);
+				// I don't have access to any quiz information
+				data = JSON.parse(data);
 		});
 	}
 
@@ -346,10 +346,11 @@ $(document).ready( function(){
 				if(now<d1){
 					// Count to see if there are any upcoming discussions
 					j++
+					dueDate = moment(dueDate).format('MMMM Do YYYY, h:mm:ss a');
 					discussionString += "<tr>";
 					discussionString += "<td><a href="+data[i].html_url+"><h4>"+data[i].title+"</h4></a></td>";
 					discussionString += "<td>"+data[i].assignment["points_possible"]+"</td>";
-					discussionString += "<td>"+d1+"</td>";
+					discussionString += "<td>"+dueDate+"</td>";
 					discussionString += "</tr>";
 				}
 			}
@@ -374,10 +375,11 @@ $(document).ready( function(){
 					var d1 = Date.parse(dueDate);
 					if(now>d1){
 						k++;
+						dueDate = moment(dueDate).format('MMMM Do YYYY, h:mm:ss a');
 						discussionString += "<tr>";
 						discussionString += "<td><a href="+data[i].html_url+"><h4>"+data[i].title+"</h4></a></td>";
 						discussionString += "<td>"+data[i].assignment["points_possible"]+"</td>";
-						discussionString += "<td>"+d1+"</td>";
+						discussionString += "<td>"+dueDate+"</td>";
 						discussionString += "</tr>";
 					}
 				}

@@ -2,7 +2,7 @@
 /*
 	functions for mycanvas.php
 */
-
+// $_SESSION holds the api key
  session_start();
 
 function callAPI($url) {
@@ -19,19 +19,13 @@ function callAPI($url) {
 }
 
 function getAvatar() {
-	// Get avatar information from the canvas api and display it on the page
+	// Get avatar information from the canvas api and display it on the dashboard
 	$avatarURL = "https://clarkcollege.instructure.com/api/v1/users/self/avatars.json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($avatarURL);
 	$data = json_decode($data);
 	$avatarString = "<img src=".$data[0]->url." id="."avatar".">";
 	echo $avatarString;
 }
-
-// function mainMenu() {
-// 	// Build a header string that links to the homepage
-// 	$menuString = "<a href="."mycanvas.php"." id ="."homeLink".">Home</a>";
-// 	echo $menuString;
-// }
 
 function getCourse($course) {
 	// Get data about a course based on the courses id number
@@ -54,7 +48,7 @@ function getEnrollments() {
 }
 
 function displayCourseSelect() {
-	// Function creates a select box that allows the user to pick the courses
+	// Function creates a select box that allows the user to pick the courses they are enrolled in
 	$selectString = "<form id="."selectCourseForm"."><select id="."selectCourseSelect".">";
 	// Get course id numbers from the enrollments api
 	$enrollmentsData = getEnrollments();
@@ -68,9 +62,9 @@ function displayCourseSelect() {
 		// Builds a string to populate the select box
 		$selectString .= "<option value=".$courseData->id.">".$courseData->name."</option>";
 	}
-	// Add another option to the select 
-	// This will aloow me to view a course that I'm nolonger enrolled in
-	// The reason for this is to display discussion data
+	// Add another hard coded option to the select 
+	// This will allow me to view a course that I'm nolonger enrolled in
+	// The reason for this is to display discussion data. None of my other classes have discussion data
 	$selectString .= "<option value=\"1510728\">CTEC 145 - WEB SERVER TECHNOLOGY</option>";
 	$selectString .= "</select>";
 	$selectString .= "<button id="."selectCourse".">Select Course</button>";
@@ -83,9 +77,7 @@ function getCourseInfoAPI($data) {
 	$course = $data->course;
 	$courseInfoURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course.".json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($courseInfoURL);
-	//$data = json_encode($data);
 	echo $data;
-
 }
 
 function getSelf() {
@@ -102,13 +94,11 @@ function getAssignments($data) {
 	$course = $data->course;
 	$assignmentsURL = "https://clarkcollege.instructure.com/api/v1/users/self/courses/".$course."/assignments.json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($assignmentsURL);
-	// $data = file_get_contents($assignmentsURL); 
-	//$data = json_encode($data);
-	//$data = json_decode($data);
 	echo $data;
 }
 
 function getModulesAPI($data) {
+	// Get data about the modules based on course id number
 	$course = $data->course;
 	$modulesURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course."/modules.json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($modulesURL);
@@ -116,10 +106,10 @@ function getModulesAPI($data) {
 }
 
 function getModuleItemsAPI($data)  {
+	// Get the data for each module item 
 	$itemsURL = $data->url;
 	$itemsURL .= ".json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($itemsURL);
-	//$data =json_encode($data);
 	echo $data;
 }
 
@@ -131,6 +121,7 @@ function getModuleItemContentAPI($data) {
 }
 
 function getGrades($data) {
+	// Uses the enrollments api to get the overall score for each class
 	$gradesURL = "https://clarkcollege.instructure.com/api/v1/users/4337133/enrollments.json?access_token=".$_SESSION['apiKey']; 
 	$data = callAPI($gradesURL);
 	//$data =json_encode($data);
@@ -138,23 +129,24 @@ function getGrades($data) {
 }
 
 function getQuizzesAPI($data) {
+	// This function calls the quizzes api
+	// For me, it only return "quizzes are locked for the course"
 	$course = $data->course;
 	$quizzesURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course."/quizzes.json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($quizzesURL);
-	print_r($data);
-	$data =json_encode($data);
 	echo $data;
 }
 
 function getDiscussionsAPI($data) {
+	// Get discussion data
 	$course = $data->course;
 	$discussionsURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course."/discussion_topics.json?access_token=".$_SESSION['apiKey'];
 	$data = callAPI($discussionsURL);
-	//$data = json_encode($data);
 	echo $data;
 }
 
 function getAssignmentGrade($data) {
+	// Get the scores for past assignments
 	$course = $data->course;
 	$id = $data->assignment;
 	$gradeURL = "https://clarkcollege.instructure.com/api/v1/courses/".$course."/assignments/".$id."/submissions/4337133.json?access_token=".$_SESSION['apiKey'];

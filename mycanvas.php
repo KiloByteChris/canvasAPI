@@ -31,7 +31,6 @@
 	<script src="js/moment.js"></script>
   	<!-- JAVASCRIPT -->
 	<script src="js/mycanvas.js"></script>
-	
 </head>
 <body>
 	<div id="wrapper">
@@ -39,11 +38,11 @@
 			<h1><a href="">Canvas API</a></h1>
 			<div id="headerBox">
 				<?php
-				require "includes/functions.inc.php";
-				// Functions from he include file that display data from the Canavs API
+					require "includes/functions.inc.php";
+					// Functions from he include file that display data from the Canavs API
+					// Dashboard
 					getAvatar();
 					getSelf();
-					// mainMenu();
 					displayCourseSelect();
 				?>	
 				<div id="beefDiv"></div>
@@ -51,7 +50,6 @@
 			<nav></nav>
 			<div id="subHeader"></div>
 			<div id="gradeDiv"></div>
-				
 		</header>
 		<main>
 			<div id="infoDiv">

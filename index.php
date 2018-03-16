@@ -24,6 +24,7 @@
 			<h1>Canvas API</h1>
 			<h2>Welcome to the Canvas API</h2>
 		</header>
+		<!-- Login form -->
 		<form method="POST" action="includes/login.php" id="loginForm">
 			<h3>Sign In</h3>
 			<label for="userIdInput">Student ID Number</label>
@@ -32,7 +33,7 @@
 			<input type="text" name="password" id="userPasswordInput">
 			<input type="submit" value="Login" name="login" class="formSubmit">
 		</form>
-
+		<!-- Create account form -->
 		<form method="POST" action="includes/create_user.php" id="newUserForm">
 			<h3>Create Account</h3>
 			<label for="createIdInput">Student ID Number</label>
