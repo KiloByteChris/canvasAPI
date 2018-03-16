@@ -25,7 +25,7 @@ body {
 
 /* ------------- HEADER -------------------*/
 header {
-	background-color: #ECBCF0;
+	background-color: #B6E2F7;
 	border-radius: 5px;
 	border: 2px solid #636363;
 }
@@ -325,20 +325,38 @@ footer p{
     	margin: 0 10px 0 10px;
     }
 
-    #subHeader h2 {
+    #subheader {
+    	clear: both;
+    	/*margin-top: -10px;*/
+    }
+
+    nav { 
     	position: relative;
-    	top: -10px;
-    	margin-left: 70px;
-    	display: inline;
+    	top: 40px;
+    	float: right;
+    	margin-right: 75px;
+    	/*margin-top: 25px;*/
+    }
+
+    #subHeader h2 {
     	float: left;
+    	margin-left: 65px;
+    	/*margin-top: -1px;*/
     }
 
     #gradeDiv {
-    	position: relative;
-    	top: 20px;
-    	left: -242px;
-    	float: left;
+    	display: block;
+    	clear: both;
     	line-height: 1.2em;
-    	margin-left: 10px;
+    	text-align: center;
+    }
+
+    #grade {
+    	position: relative;
+    	left: -503px;
+    }
+
+    .infoHeader {
+    	clear: both;
     }
 }   

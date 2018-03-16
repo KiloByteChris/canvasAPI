@@ -41,7 +41,6 @@
 				<?php
 				require "includes/functions.inc.php";
 				// Functions from he include file that display data from the Canavs API
-				
 					getAvatar();
 					getSelf();
 					// mainMenu();
@@ -49,9 +48,9 @@
 				?>	
 				<div id="beefDiv"></div>
 			</div>
+			<nav></nav>
 			<div id="subHeader"></div>
 			<div id="gradeDiv"></div>
-			<nav></nav>
 				
 		</header>
 		<main>
