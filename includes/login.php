@@ -34,5 +34,4 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 // Close the databsae connection
 mysqli_close($connection);
-
 ?>

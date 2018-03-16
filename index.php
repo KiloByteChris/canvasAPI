@@ -28,7 +28,7 @@
 		<form method="POST" action="includes/login.php" id="loginForm">
 			<h3>Sign In</h3>
 			<label for="userIdInput">Student ID Number</label>
-			<input type="text" name="userId" id="userIdINput">
+			<input type="text" name="userId" id="userIdInput">
 			<label for="userPasswordInput">Password</label>
 			<input type="text" name="password" id="userPasswordInput">
 			<input type="submit" value="Login" name="login" class="formSubmit">
@@ -37,7 +37,7 @@
 		<form method="POST" action="includes/create_user.php" id="newUserForm">
 			<h3>Create Account</h3>
 			<label for="createIdInput">Student ID Number</label>
-			<input type="text" name="userId" id="createIdINput">
+			<input type="text" name="userId" id="createIdInput">
 			<label for="createPasswordInput">Password</label>
 			<input type="text" name="password" id="createPasswordInput">
 			<label for="apiKeyInput">API Key</label>
